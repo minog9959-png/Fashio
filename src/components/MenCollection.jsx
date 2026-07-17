@@ -1,5 +1,5 @@
 import { useState } from "react";
-import banner from "../assets/images/Man-large.jpg";
+import banner from "../assets/images/man-large.jpg";
 import man1 from "../assets/images/man-1.jpg";
 import man2 from "../assets/images/man-2.jpg";
 import man3 from "../assets/images/man-3.jpg";
