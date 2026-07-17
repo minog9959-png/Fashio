@@ -10,7 +10,7 @@ const Header = () => {
                     {/* Logo */}
                     <div>
                         <h1 className="text-4xl font-bold tracking-wider">
-                            Fashi<span className="text-pink-500">.</span>
+                            Fashio<span className="text-pink-500">.</span>
                         </h1>
                     </div>
 
