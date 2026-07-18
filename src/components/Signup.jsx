@@ -30,7 +30,8 @@ const Signup = () => {
 
   try {
     const response = await axios.post(
-      "http://localhost:8000/api/form/signup",
+      // "http://localhost:8000/api/form/signup",
+      "https://fashio-backend-seven.vercel.app/api/form/signup",
       {
         name: formData.name,
         email: formData.email,
