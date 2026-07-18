@@ -23,7 +23,6 @@ const handleSubmit = async (e) => {
 
   try {
 const response = await axios.post(
-  // "http://localhost:8000/api/form/login",
   "https://fashio-backend-seven.vercel.app/api/form/login",
   {
     email: formData.email,
