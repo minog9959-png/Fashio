@@ -27,6 +27,8 @@ const Signup = () => {
       alert("Passwords do not match");
       return;
     }
+    
+    console.log(import.meta.env.VITE_API_URL);
 
     try {
       const response = await axios.post(
