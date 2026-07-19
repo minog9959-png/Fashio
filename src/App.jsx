@@ -20,9 +20,10 @@ import Signup from "./components/Signup";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function Home() {
- const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     if (location.state?.success) {

@@ -7,15 +7,23 @@ import {
   FaUser,
   FaPhoneAlt,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TopBar = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const handleLogout = () => {
+    // console.log("Logout clicked");
+    localStorage.removeItem("token");
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <div className="border-b border-gray-200 bg-white">
       <div className="max-w-7xl mx-auto px-5">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Left Side */}
-            <div className="flex flex-col sm:flex-row items-center">
+          <div className="flex flex-col sm:flex-row items-center">
             {/* Address */}
             <div className="flex items-center gap-2 py-4 pr-6 border-r border-gray-200 text-[15px] text-gray-900">
               <FaPhoneAlt className="text-gray-900 text-sm" />
@@ -50,11 +58,23 @@ const TopBar = () => {
             </div>
 
             {/* Login */}
-            <Link to="/login"
-            className="flex items-center gap-2 px-6 py-4 cursor-pointer hover:text-pink-500 duration-300 text-sm text-gray-900">             
-              <FaUser className="text-xs" />
-              <span>Login</span>
-            </Link>
+            {!token ? (
+              <Link
+                to="/login"
+                className="flex items-center gap-2 px-6 py-4 cursor-pointer hover:text-pink-500 duration-300 text-sm text-gray-900"
+              >
+                <FaUser className="text-xs" />
+                <span>Login</span>
+              </Link>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-6 py-4 cursor-pointer hover:text-pink-500 duration-300 text-sm text-gray-900"
+              >
+                <FaUser className="text-xs" />
+                <span>Logout</span>
+              </button>
+            )}
 
           </div>
 

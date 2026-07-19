@@ -18,34 +18,36 @@ const Login = () => {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-const response = await axios.post(
-  "https://fashio-backend-seven.vercel.app/api/form/login",
-  {
-    email: formData.email,
-    password: formData.password,
-  }
-);
+    try {
+      const response = await axios.post(
+        // "https://fashio-backend-seven.vercel.app/api/form/login",
+        "http://localhost:8000/api/form/login",
 
-console.log(response.data);
+        {
+          email: formData.email,
+          password: formData.password,
+        }
+      );
 
-navigate("/", {
-  state: {
-    success: true,
-  },
-});
+      console.log(response.data);
 
-localStorage.setItem("token", response.data.token);
+      navigate("/", {
+        state: {
+          success: true,
+        },
+      });
 
-  } catch (error) {
-    alert(
-      error.response?.data?.message || "Login Failed"
-    );
-  }
-};
+      localStorage.setItem("token", response.data.token);
+
+    } catch (error) {
+      alert(
+        error.response?.data?.message || "Login Failed"
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black/50">

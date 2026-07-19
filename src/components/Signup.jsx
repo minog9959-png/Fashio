@@ -20,37 +20,37 @@ const Signup = () => {
     });
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (formData.password !== formData.confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-  try {
-    const response = await axios.post(
-      // "http://localhost:8000/api/form/signup",
-      "https://fashio-backend-seven.vercel.app/api/form/signup",
-      {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        newpass: formData.confirmPassword,
-      }
-    );
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/form/signup",
+        // "https://fashio-backend-seven.vercel.app/api/form/signup",
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          newpass: formData.confirmPassword,
+        }
+      );
 
-    alert(response.data.message);
+      alert(response.data.message);
 
-    navigate("/login");
+      navigate("/login");
 
-  } catch (error) {
-  console.log(error);
-  console.log(error.response);
+    } catch (error) {
+      console.log(error);
+      console.log(error.response);
 
-  alert(error.response?.data?.message || error.message);
-}
-};
+      alert(error.response?.data?.message || error.message);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black/50">
