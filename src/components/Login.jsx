@@ -24,7 +24,8 @@ const Login = () => {
     try {
       const response = await axios.post(
         // "https://fashio-backend-seven.vercel.app/api/form/login",
-        "http://localhost:8000/api/form/login",
+        // "http://localhost:8000/api/form/login",
+        `${import.meta.env.VITE_API_URL}/api/form/login`,
 
         {
           email: formData.email,
