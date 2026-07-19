@@ -28,20 +28,21 @@ const Signup = () => {
       return;
     }
     
-    console.log(import.meta.env.VITE_API_URL);
+  try {
+    // console.log(import.meta.env.VITE_API_URL);
 
-    try {
-      const response = await axios.post(
-        // "http://localhost:8000/api/form/signup",
-        // "https://fashio-backend-seven.vercel.app/api/form/signup",
-        `${import.meta.env.VITE_API_URL}/api/form/signup`,
-        {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          newpass: formData.confirmPassword,
-        }
-      );
+    const response = await axios.post(
+      // `${import.meta.env.VITE_API_URL}/api/form/signup`,
+       "http://localhost:8000/api/form/signup",
+      {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        newpass: formData.confirmPassword,
+      }
+    );
+
+    // console.log(import.meta.env.VITE_API_URL);
 
       alert(response.data.message);
 
