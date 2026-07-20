@@ -2,7 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaSearch, FaHeart, FaShoppingBag, FaChevronDown } from "react-icons/fa";
 
-const Header = () => {
+const Header = ({
+  selectedCategory,
+  setSelectedCategory,
+  search,
+  setSearch,
+  setSearchKeyword,
+}) => {
     const [categories, setCategories] = useState([]);
     const [showCategories, setShowCategories] = useState(false);
     const fetchCategories = async () => {
@@ -18,7 +24,7 @@ const Header = () => {
         }
     };
     useEffect(() => {
-      fetchCategories();
+        fetchCategories();
     }, []);
     // useEffect(() => {
     //     console.log(categories);
@@ -52,30 +58,48 @@ const Header = () => {
                         <input
                             type="text"
                             placeholder="What do you need?"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                             className="flex-1 px-5 text-sm outline-none"
                         />
-
                         {/* Search Button */}
-                        <button className="flex items-center justify-center gap-2 bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-8 duration-300">
+                        <button onClick={() => setSearchKeyword(search)}
+                        className="flex items-center justify-center gap-2 bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-8 duration-300">
                             <FaSearch className="text-lg" />
                         </button>
 
+                        {showCategories && (
+                            <div className="absolute left-0 top-full mt-1 w-56 bg-white border shadow-lg z-50">
+
+                                {categories.map((category) => (
+                                    // <p
+                                    //     key={category._id}
+                                    //     onClick={() => {
+                                    //         console.log(category)
+                                    //         setSelectedCategory(category._id);
+                                    //         setShowCategories(false);
+                                    //     }}
+                                    //     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    // >
+                                    //     {category.name}
+                                    // </p>
+                                    <p
+                                        key={category._id}
+                                        onClick={() => {
+                                            alert(category.name);
+                                            console.log(category);
+                                            setSelectedCategory(category._id);
+                                            setShowCategories(false);
+                                        }}
+                                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    >
+                                        {category.name}
+                                    </p>
+                                ))}
+
+                            </div>
+                        )}
                     </div>
-
-                    {showCategories && (
-                        <div className="absolute left-0 top-full mt-1 w-56 bg-white border shadow-lg z-50">
-
-                            {categories.map((category) => (
-                                <p
-                                    key={category._id}
-                                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                >
-                                    {category.name}
-                                </p>
-                            ))}
-
-                        </div>
-                    )}
 
                     {/* Icons */}
 
