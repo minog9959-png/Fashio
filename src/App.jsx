@@ -21,6 +21,8 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Shop from "./components/Shop";
+import ProductDetails from "./pages/ProductDetails";
 
 function Home() {
   const location = useLocation();
@@ -65,10 +67,15 @@ function App() {
 
       <Route path="/signup" element={<Signup />} />
 
+      <Route path="/shop" element={<Shop />} />
+
+      <Route path="/product/:id" element={<ProductDetails />} />
+
       {/* <Route
         path="/womenCollection"
         element={<WomenCollection />}
       /> */}
+
     </Routes>
   );
 }

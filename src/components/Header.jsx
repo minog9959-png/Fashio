@@ -1,6 +1,28 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaSearch, FaHeart, FaShoppingBag, FaChevronDown } from "react-icons/fa";
 
 const Header = () => {
+    const [categories, setCategories] = useState([]);
+    const [showCategories, setShowCategories] = useState(false);
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:8000/api/categories"
+            );
+            console.log(response.data);
+
+            setCategories(response.data.categories);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+      fetchCategories();
+    }, []);
+    // useEffect(() => {
+    //     console.log(categories);
+    // }, [categories]);
     return (
         <header className="border-b border-gray-200 bg-white">
             <div className="max-w-[1200px] mx-auto px-5 py-7">
@@ -15,10 +37,13 @@ const Header = () => {
                     </div>
 
                     {/* Search */}
-                    <div className="flex w-full lg:w-[650px] h-[52px] border border-gray-300 rounded-sm overflow-hidden">
+                    <div className="relative flex w-full lg:w-[650px] h-[52px] border border-gray-300 rounded-sm">
 
                         {/* Categories */}
-                        <button className="flex items-center gap-2 px-6 border-r border-gray-300 font-semibold text-sm">
+                        <button
+                            onClick={() => setShowCategories(!showCategories)}
+                            className="flex items-center gap-2 px-6 border-r border-gray-300 font-semibold text-sm"
+                        >
                             All Categories
                             <FaChevronDown className="text-xs" />
                         </button>
@@ -32,10 +57,25 @@ const Header = () => {
 
                         {/* Search Button */}
                         <button className="flex items-center justify-center gap-2 bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-8 duration-300">
-                            <FaSearch className="text-lg"/>
+                            <FaSearch className="text-lg" />
                         </button>
 
                     </div>
+
+                    {showCategories && (
+                        <div className="absolute left-0 top-full mt-1 w-56 bg-white border shadow-lg z-50">
+
+                            {categories.map((category) => (
+                                <p
+                                    key={category._id}
+                                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                >
+                                    {category.name}
+                                </p>
+                            ))}
+
+                        </div>
+                    )}
 
                     {/* Icons */}
 
