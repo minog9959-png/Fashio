@@ -11,7 +11,8 @@ const ProductDetails = () => {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/products/${id}`
+        // `http://localhost:8000/api/products/${id}`
+        `${import.meta.env.VITE_API_URL}/products/${id}`
       );
 
       console.log("Response:", response.data);

@@ -15,10 +15,12 @@ const ProductListing = ({ selectedCategory, searchKeyword, page, setPage }) => {
             //     "http://localhost:8000/api/products"
             // );
             console.log("Selected Category:", selectedCategory);
-            let url = "http://localhost:8000/api/products";
+            // let url = "http://localhost:8000/api/products";
+            let url = `${import.meta.env.VITE_API_URL}/products`;
 
             if (selectedCategory) {
-                url = `http://localhost:8000/api/products/filter?category=${selectedCategory}`;
+                // url = `http://localhost:8000/api/products/filter?category=${selectedCategory}`;
+                url = `${import.meta.env.VITE_API_URL}/products/filter?category=${selectedCategory}`;
             }
 
             // if (search.trim()) {
@@ -26,11 +28,13 @@ const ProductListing = ({ selectedCategory, searchKeyword, page, setPage }) => {
             // }
 
             if (searchKeyword.trim()) {
-                url = `http://localhost:8000/api/products/search?keyword=${searchKeyword}`;
+                // url = `http://localhost:8000/api/products/search?keyword=${searchKeyword}`;
+                url = `${import.meta.env.VITE_API_URL}/products/search?keyword=${searchKeyword}`;
             }
 
             if (!selectedCategory && !searchKeyword.trim()) {
-                url = `http://localhost:8000/api/products/pagination?page=${page}`;
+                // url = `http://localhost:8000/api/products/pagination?page=${page}`;
+                url = `${import.meta.env.VITE_API_URL}/products/pagination?page=${page}`;
             }
 
             console.log("Current Page:", page);
@@ -84,8 +88,6 @@ const ProductListing = ({ selectedCategory, searchKeyword, page, setPage }) => {
             </div>
 
         </div>
-
-
     );
 };
 

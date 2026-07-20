@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaBars, FaChevronDown, FaTimes } from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -25,11 +26,42 @@ const Navbar = () => {
       {/* Desktop Menu */}
 
         <ul className="hidden md:flex items-center text-white">
-        <li className="bg-[#E7AB3C] px-7 h-14 flex items-center">HOME</li>
+        {/* <li className="px-7 h-14 flex items-center">HOME</li> */}
+        <li className="h-14 flex items-center">
+  <NavLink
+    to="/"
+    className={({ isActive }) =>
+      `px-7 h-14 flex items-center duration-300 ${
+        isActive
+          ? "bg-[#E7AB3C] text-white"
+          : "hover:bg-[#E7AB3C]"
+      }`
+    }
+  >
+    HOME
+  </NavLink>
+</li>
 
-        <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+        {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+          <Link to="/shop">
           SHOP
-        </li>
+          </Link>
+        </li> */}
+
+<li className="h-14 flex items-center">
+  <NavLink
+    to="/shop"
+    className={({ isActive }) =>
+      `px-7 h-14 flex items-center duration-300 ${
+        isActive
+          ? "bg-[#E7AB3C] text-white"
+          : "hover:bg-[#E7AB3C]"
+      }`
+    }
+  >
+    SHOP
+  </NavLink>
+</li>
 
         <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
           COLLECTION
