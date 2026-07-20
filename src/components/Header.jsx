@@ -17,7 +17,7 @@ const Header = ({
     const fetchCategories = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:8000/api/categories"
+                `${import.meta.env.VITE_API_URL}/categories`
             );
             console.log(response.data);
 
