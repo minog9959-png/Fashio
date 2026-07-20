@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import ProductListing from "./ProductListing";
@@ -12,6 +13,24 @@ const Shop = () => {
   useEffect(() => {
     console.log(selectedCategory);
   }, [selectedCategory]);
+//location redirect page
+const location = useLocation();
+
+// useEffect(() => {
+//   if (location.state?.category) {
+//     setSelectedCategory(location.state?.category || "");
+//   }
+
+//   if (location.state?.search) {
+//     setSearchKeyword(location.state?.search || "");
+//   }
+// }, [location]);
+
+useEffect(() => {
+  setSelectedCategory(location.state?.category || "");
+  setSearchKeyword(location.state?.search || "");
+}, [location]);
+
   return (
     <>
       <TopBar />

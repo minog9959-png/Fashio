@@ -1,16 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaSearch, FaHeart, FaShoppingBag, FaChevronDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({
-  selectedCategory,
-  setSelectedCategory,
-  search,
-  setSearch,
-  setSearchKeyword,
+    selectedCategory,
+    setSelectedCategory,
+    search,
+    setSearch,
+    setSearchKeyword,
 }) => {
     const [categories, setCategories] = useState([]);
     const [showCategories, setShowCategories] = useState(false);
+    const dropdownRef = useRef(null);
+    const navigate = useNavigate();
     const fetchCategories = async () => {
         try {
             const response = await axios.get(
@@ -29,6 +32,22 @@ const Header = ({
     // useEffect(() => {
     //     console.log(categories);
     // }, [categories]);
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target)
+            ) {
+                setShowCategories(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
     return (
         <header className="border-b border-gray-200 bg-white">
             <div className="max-w-[1200px] mx-auto px-5 py-7">
@@ -43,7 +62,7 @@ const Header = ({
                     </div>
 
                     {/* Search */}
-                    <div className="relative flex w-full lg:w-[650px] h-[52px] border border-gray-300 rounded-sm">
+                    <div ref={dropdownRef} className="relative flex w-full lg:w-[650px] h-[52px] border border-gray-300 rounded-sm">
 
                         {/* Categories */}
                         <button
@@ -63,8 +82,16 @@ const Header = ({
                             className="flex-1 px-5 text-sm outline-none"
                         />
                         {/* Search Button */}
-                        <button onClick={() => setSearchKeyword(search)}
-                        className="flex items-center justify-center gap-2 bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-8 duration-300">
+                        {/* <button onClick={() => setSearchKeyword(search)} */}
+                        <button onClick={() => {
+                            navigate("/shop", {
+                                state: {
+                                    category: "",
+                                    search: search,
+                                },
+                            });
+                        }}
+                            className="flex items-center justify-center gap-2 bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-8 duration-300">
                             <FaSearch className="text-lg" />
                         </button>
 
@@ -86,9 +113,15 @@ const Header = ({
                                     <p
                                         key={category._id}
                                         onClick={() => {
-                                            alert(category.name);
+                                            // alert(category.name);
                                             console.log(category);
-                                            setSelectedCategory(category._id);
+                                            // setSelectedCategory(category._id);
+                                            navigate("/shop", {
+                                                state: {
+                                                    category: category._id,
+                                                    search: "",
+                                                },
+                                            });
                                             setShowCategories(false);
                                         }}
                                         className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
