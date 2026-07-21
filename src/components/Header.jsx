@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { FaSearch, FaHeart, FaShoppingBag, FaChevronDown } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({
     selectedCategory,
@@ -141,8 +141,9 @@ const Header = ({
                         <FaHeart className="text-xl cursor-pointer hover:text-pink-500 duration-300" />
 
                         <div className="relative cursor-pointer">
+                            <Link to="/cart">
                             <FaShoppingBag className="text-xl hover:text-pink-500 duration-300" />
-
+                            </Link>
                             <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
                                 0
                             </span>

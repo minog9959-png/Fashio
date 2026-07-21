@@ -23,6 +23,7 @@ import Swal from "sweetalert2";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Shop from "./components/Shop";
 import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
 
 function Home() {
   const location = useLocation();
@@ -70,6 +71,8 @@ function App() {
       <Route path="/shop" element={<Shop />} />
 
       <Route path="/product/:id" element={<ProductDetails />} />
+
+      <Route path="/cart" element={<Cart />} />
 
       {/* <Route
         path="/womenCollection"

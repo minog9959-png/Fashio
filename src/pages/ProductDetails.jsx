@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
 
   console.log(id);
@@ -20,6 +21,38 @@ const ProductDetails = () => {
       setProduct(response.data.product);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      if (!product) return;
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/cart`,
+        {
+          user: "6a69f7b37c693b5acf03fb96", // temporary
+          product: product._id,
+          quantity: quantity,
+        }
+      );
+
+      alert(response.data.message);
+
+    } catch (error) {
+      console.log(error);
+
+      alert(error.response?.data?.message || "Failed to add to cart");
     }
   };
 
@@ -95,15 +128,15 @@ const ProductDetails = () => {
           {/* Quantity */}
           <div className="flex items-center gap-4 mt-8">
 
-            <button className="w-12 h-12 border rounded text-2xl hover:bg-gray-100 duration-300">
+            <button onClick={decreaseQuantity} className="w-12 h-12 border rounded text-2xl hover:bg-gray-100 duration-300">
               -
             </button>
 
             <span className="text-xl font-semibold">
-              1
+              {quantity}
             </span>
 
-            <button className="w-12 h-12 border rounded text-2xl hover:bg-gray-200 duration-300">
+            <button onClick={increaseQuantity} className="w-12 h-12 border rounded text-2xl hover:bg-gray-200 duration-300">
               +
             </button>
 
@@ -112,7 +145,7 @@ const ProductDetails = () => {
           {/* Buttons */}
           <div className="flex gap-4 mt-8">
 
-            <button className="bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-10 py-4 rounded font-semibold duration-300 shadow-lg">
+            <button onClick={handleAddToCart} className="bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-10 py-4 rounded font-semibold duration-300 shadow-lg">
               Add To Cart
             </button>
 
