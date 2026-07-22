@@ -32,7 +32,7 @@ const Signup = () => {
     // console.log(import.meta.env.VITE_API_URL);
 
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/form/signup`,
+      `${import.meta.env.VITE_API_URL}/form/signup`,
       //  "http://localhost:8000/api/form/signup",
       {
         name: formData.name,

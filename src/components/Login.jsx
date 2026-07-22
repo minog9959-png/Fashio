@@ -25,7 +25,7 @@ const Login = () => {
       const response = await axios.post(
         // "https://fashio-backend-seven.vercel.app/api/form/login",
         // "http://localhost:8000/api/form/login",
-        `${import.meta.env.VITE_API_URL}/api/form/login`,
+        `${import.meta.env.VITE_API_URL}/form/login`,
 
         {
           email: formData.email,
@@ -42,6 +42,10 @@ const Login = () => {
       });
 
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem(
+        "userId",
+        response.data.userId
+      );
 
     } catch (error) {
       alert(

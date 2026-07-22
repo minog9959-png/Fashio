@@ -41,7 +41,8 @@ const ProductDetails = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/cart`,
         {
-          user: "6a69f7b37c693b5acf03fb96", // temporary
+          // user: "6a69f7b37c693b5acf03fb96", temporary
+          user: localStorage.getItem("userId"),
           product: product._id,
           quantity: quantity,
         }
