@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,34 +20,32 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log(import.meta.env.VITE_API_URL);
     try {
       const response = await axios.post(
-        // "https://fashio-backend-seven.vercel.app/api/form/login",
-        // "http://localhost:8000/api/form/login",
         `${import.meta.env.VITE_API_URL}/form/login`,
-
         {
           email: formData.email,
           password: formData.password,
         }
       );
 
-      console.log(response.data);
-
-      navigate("/", {
-        state: {
-          success: true,
-        },
-      });
+      console.log("Login Response:", response.data);
+      console.log("User ID:", response.data.userId);
 
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem(
-        "userId",
-        response.data.userId
-      );
+      localStorage.setItem("userId", response.data.userId);
+
+      if (location.state?.from === "/cart") {
+        navigate("/cart", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
 
     } catch (error) {
+      console.log("Login Error:", error);
+
       alert(
         error.response?.data?.message || "Login Failed"
       );

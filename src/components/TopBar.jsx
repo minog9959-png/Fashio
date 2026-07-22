@@ -14,7 +14,8 @@ const TopBar = () => {
   const token = localStorage.getItem("token");
   const handleLogout = () => {
     // console.log("Logout clicked");
-    localStorage.removeItem("token");
+     localStorage.removeItem("token");
+     localStorage.removeItem("userId");
     navigate("/");
     window.location.reload();
   };

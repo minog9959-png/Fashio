@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const ProtectedRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -19,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
 
       try {
         await axios.get(
-          "http://localhost:8000/api/form/me",
+          `${import.meta.env.VITE_API_URL}/form/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +42,15 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) return <h2>Loading...</h2>;
 
-  return authorized ? children : <Navigate to="/login" replace />;
+  return authorized ? (
+  children
+) : (
+  <Navigate
+    to="/login"
+    state={{ from: location.pathname }}
+    replace
+  />
+);
 };
 
 export default ProtectedRoute;

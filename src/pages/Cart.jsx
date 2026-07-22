@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const userId = localStorage.getItem("userId");
+// const userId = localStorage.getItem("userId");
 // console.log("UserId =", userId);
 const Cart = () => {
+  const token = localStorage.getItem("token");
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -10,9 +11,22 @@ const Cart = () => {
     setLoading(true);
     try {
       const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      // if (!token) {
+      //   navigate("/login", {
+      //     state: { from: "cart" }
+      //   });
+      //   return;
+      // }
       const response = await axios.get(
         // `${import.meta.env.VITE_API_URL}/cart/6a69f7b37c693b5acf03fb96`
-        `${import.meta.env.VITE_API_URL}/cart/${userId}`
+        `${import.meta.env.VITE_API_URL}/cart/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setCartItems(response.data.cartItems);
@@ -30,7 +44,12 @@ const Cart = () => {
   const handleDelete = async (cartId) => {
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/cart/${cartId}`
+        `${import.meta.env.VITE_API_URL}/cart/${cartId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       alert(response.data.message);
@@ -52,6 +71,11 @@ const Cart = () => {
         `${import.meta.env.VITE_API_URL}/cart/${cartId}`,
         {
           quantity: currentQuantity + 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -80,6 +104,11 @@ const Cart = () => {
         `${import.meta.env.VITE_API_URL}/cart/${cartId}`,
         {
           quantity: currentQuantity - 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

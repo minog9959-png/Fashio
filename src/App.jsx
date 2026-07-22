@@ -17,7 +17,6 @@ import WomenCollection from "./components/WomenCollection";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -26,19 +25,39 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 
 function Home() {
-  const location = useLocation();
+  // const location = useLocation();
 
-  useEffect(() => {
-    if (location.state?.success) {
-      Swal.fire({
-        icon: "success",
-        title: "Welcome Back!",
-        text: "You are an authorized user. Now you can shop anything from our store.",
-        confirmButtonText: "Start Shopping",
-        confirmButtonColor: "#D89D32", // Orange
-      });
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (location.state?.success) {
+  //     Swal.fire({
+  //       icon: "success",
+  //       title: "Welcome Back!",
+  //       text: "You are an authorized user. Now you can shop anything from our store.",
+  //       confirmButtonText: "Start Shopping",
+  //       confirmButtonColor: "#D89D32", // Orange
+  //     });
+  //   }
+  // }, [location]);
+
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+// useEffect(() => {
+//   const token = localStorage.getItem("token");
+
+//   if (location.state?.success && token) {
+//     Swal.fire({
+//       title: "Welcome Back!",
+//       text: "You are an authorized user. Now you can shop anything from our store.",
+//       icon: "warning",
+//     });
+
+//     navigate("/",
+//        { replace: true,
+//         state: {} 
+//       });
+//   }
+// }, [location, navigate]);
 
   return (
     <>
@@ -72,7 +91,11 @@ function App() {
 
       <Route path="/product/:id" element={<ProductDetails />} />
 
-      <Route path="/cart" element={<Cart />} />
+      <Route path="/cart" element={
+        <ProtectedRoute>
+        <Cart />
+        </ProtectedRoute>
+        } />
 
       {/* <Route
         path="/womenCollection"

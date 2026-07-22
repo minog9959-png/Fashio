@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
 
   console.log(id);
+  const navigate = useNavigate();
 
   const fetchProduct = async () => {
     try {
@@ -37,14 +37,26 @@ const ProductDetails = () => {
   const handleAddToCart = async () => {
     try {
       if (!product) return;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Please login first");
+        navigate("/login");
+        return;
+      }
 
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/cart`,
         {
           // user: "6a69f7b37c693b5acf03fb96", temporary
-          user: localStorage.getItem("userId"),
+          // user: localStorage.getItem("userId"),
           product: product._id,
           quantity: quantity,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
