@@ -23,6 +23,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Shop from "./components/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import Wishlist from "./pages/Wishlist";
+import MyOrders from "./pages/MyOrders";
+import Layout from "./pages/Layout";
 
 function Home() {
   // const location = useLocation();
@@ -78,21 +81,26 @@ function Home() {
 function App() {
   return (
     <>
-    
-    <TopBar/>
-    <Header/>
-    <Navbar/>
-
     <Routes>
+
+      <Route element={<Layout />} >
+
+      {/* Pages with Header + footer */}
+
       <Route path="/" element={<Home />} />
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/shop" element={
+        <ProtectedRoute>
+        <Shop />
+        </ProtectedRoute>
+        } />
 
-      <Route path="/signup" element={<Signup />} />
-
-      <Route path="/shop" element={<Shop />} />
-
-      <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="/product/:id" element={
+        <ProtectedRoute>
+        <ProductDetails />
+        </ProtectedRoute>
+         } 
+       />
 
       <Route path="/cart" element={
         <ProtectedRoute>
@@ -100,10 +108,25 @@ function App() {
         </ProtectedRoute>
         } />
 
-      {/* <Route
-        path="/womenCollection"
-        element={<WomenCollection />}
-      /> */}
+      <Route path="/wishlist" element={
+        <ProtectedRoute>
+        <Wishlist />
+        </ProtectedRoute>
+      }
+         />
+
+      <Route path="/order" element={
+        <ProtectedRoute>
+          <MyOrders />
+          </ProtectedRoute>}
+           />
+
+      </Route>
+
+      {/* Pages without Header + footer */}
+      <Route path="/login" element={<Login />} />
+
+      <Route path="/signup" element={<Signup />} />
     </Routes>
     <Footer/>
     </>

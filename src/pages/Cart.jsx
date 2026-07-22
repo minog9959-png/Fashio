@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-// const userId = localStorage.getItem("userId");
-// console.log("UserId =", userId);
+
 const Cart = () => {
   const token = localStorage.getItem("token");
   const [cartItems, setCartItems] = useState([]);
@@ -56,6 +55,8 @@ const Cart = () => {
 
       fetchCartItems();
 
+      window.dispatchEvent(new Event("cartUpdated"));
+
     } catch (error) {
       console.log(error);
 
@@ -82,6 +83,7 @@ const Cart = () => {
       // alert(response.data.message);
 
       fetchCartItems();
+      window.dispatchEvent(new Event("cartUpdated"));
 
     } catch (error) {
       console.log(error);
@@ -116,6 +118,8 @@ const Cart = () => {
 
       fetchCartItems();
 
+      window.dispatchEvent(new Event("cartUpdated"));
+
     } catch (error) {
 
       console.log(error);
@@ -124,6 +128,64 @@ const Cart = () => {
         error.response?.data?.message || "Failed to update quantity"
       );
 
+    }
+  };
+
+  //Order function:
+
+  const handlePlaceOrder = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      if (!userId) {
+        alert("Please login first");
+        return;
+      }
+
+      const orderItems = cartItems.map((item) => ({
+        product: item.product._id,
+        quantity: item.quantity,
+      }));
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/order`,
+        {
+          user: userId,
+          items: orderItems,
+          totalPrice: subtotal,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert(response.data.message);
+
+      for (const item of cartItems) {
+        await axios.delete(
+          `${import.meta.env.VITE_API_URL}/cart/${item._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
+
+      setCartItems([]);
+
+      window.dispatchEvent(new Event("cartUpdated"));
+      window.dispatchEvent(new Event("orderUpdated"));
+
+    } catch (error) {
+      console.log("Order Error:", error);
+
+      alert(
+        error.response?.data?.message || "Failed to place order"
+      );
     }
   };
 
@@ -251,8 +313,8 @@ const Cart = () => {
             ${subtotal}
           </p>
 
-          <button className="w-full bg-[#E7AB3C] text-white py-3 rounded hover:bg-[#d89d32]">
-            Proceed To Checkout
+          <button onClick={handlePlaceOrder} className="w-full bg-[#E7AB3C] text-white py-3 rounded hover:bg-[#d89d32]">
+            Place Order
           </button>
 
         </div>

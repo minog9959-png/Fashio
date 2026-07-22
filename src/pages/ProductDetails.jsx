@@ -35,6 +35,7 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = async () => {
+    console.log("ADD TO CART CLICKED");
     try {
       if (!product) return;
       const token = localStorage.getItem("token");
@@ -62,12 +63,46 @@ const ProductDetails = () => {
 
       alert(response.data.message);
 
+      window.dispatchEvent(new Event("cartUpdated"));
+      console.log("Cart updated event sent");
+
     } catch (error) {
       console.log(error);
 
       alert(error.response?.data?.message || "Failed to add to cart");
     }
   };
+//wishlist handle
+  const handleAddToWishlist = async () => {
+  try {
+    if (!product) return;
+
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("Please login first");
+      navigate("/login");
+      return;
+    }
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/wishlist`,
+      {
+        user: userId,
+        product: product._id,
+      }
+    );
+
+    alert(response.data.message);
+
+  } catch (error) {
+    console.log(error);
+
+    alert(
+      error.response?.data?.message || "Failed to add to wishlist"
+    );
+  }
+};
 
   useEffect(() => {
     fetchProduct();
@@ -162,7 +197,7 @@ const ProductDetails = () => {
               Add To Cart
             </button>
 
-            <button className="border px-10 py-4 rounded hover:bg-gray-200 duration-300 shadow">
+            <button onClick={handleAddToWishlist} className="border px-10 py-4 rounded hover:bg-gray-200 duration-300 shadow">
               ❤️ Wishlist
             </button>
 

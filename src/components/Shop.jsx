@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
-import Header from "./Header";
-import Navbar from "./Navbar";
+// import TopBar from "./TopBar";
+// import Header from "./Header";
+// import Navbar from "./Navbar";
 import ProductListing from "./ProductListing";
-import TopBar from "./TopBar";
 import { useEffect, useState } from "react";
 
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [page, setPage] = useState(1);
   useEffect(() => {
@@ -33,7 +33,7 @@ useEffect(() => {
 
   return (
     <>
-      <TopBar />
+      {/* <TopBar />
       <Header
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
@@ -41,7 +41,7 @@ useEffect(() => {
         setSearch={setSearch}
         setSearchKeyword={setSearchKeyword}
       />
-      <Navbar />
+      <Navbar /> */}
       <ProductListing selectedCategory={selectedCategory} 
       searchKeyword={searchKeyword}
       page={page}
