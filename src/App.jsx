@@ -61,9 +61,6 @@ function Home() {
 
   return (
     <>
-      <TopBar />
-      <Header />
-      <Navbar />
       <Hero />
       <Categories />
       <WomenCollection />
@@ -80,6 +77,12 @@ function Home() {
 
 function App() {
   return (
+    <>
+    
+    <TopBar/>
+    <Header/>
+    <Navbar/>
+
     <Routes>
       <Route path="/" element={<Home />} />
 
@@ -101,8 +104,9 @@ function App() {
         path="/womenCollection"
         element={<WomenCollection />}
       /> */}
-
     </Routes>
+    <Footer/>
+    </>
   );
 }
 
