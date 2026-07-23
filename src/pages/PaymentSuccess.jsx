@@ -9,6 +9,7 @@ const PaymentSuccess = () => {
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
     const verifyPayment = async () => {
@@ -37,8 +38,13 @@ const PaymentSuccess = () => {
 
         console.log("Payment Verification:", response.data);
 
+        // ⭐ NEW: Order ko state mein save kar rahe hain
+        setOrder(response.data.order);
+
         setSuccess(true);
-        setMessage("Payment successful! Your order has been confirmed.");
+        setMessage(
+          "Payment successful! Your order has been confirmed."
+        );
       } catch (error) {
         console.log("Payment Verification Error:", error);
 
@@ -70,14 +76,41 @@ const PaymentSuccess = () => {
 
       {success ? (
         <>
+          {/* ⭐ Order Confirmation */}
           <h1 className="text-3xl font-bold mb-4">
-            Payment Successful 🎉
+            Order Confirmed 🎉
           </h1>
 
           <p className="mb-6">
             {message}
           </p>
 
+          {/* ⭐ Order Details */}
+          {order && (
+            <div className="border rounded-lg p-6 max-w-md mx-auto mb-6 text-left">
+
+              <p className="mb-2">
+                <strong>Order ID:</strong> {order._id}
+              </p>
+
+              <p className="mb-2">
+                <strong>Payment Status:</strong>{" "}
+                {order.paymentStatus}
+              </p>
+
+              <p className="mb-2">
+                <strong>Order Status:</strong>{" "}
+                {order.status}
+              </p>
+
+              <p>
+                <strong>Total:</strong> ${order.totalPrice}
+              </p>
+
+            </div>
+          )}
+
+          {/* ⭐ Go to Orders */}
           <button
             onClick={() => navigate("/order")}
             className="bg-black text-white px-6 py-2 rounded"
