@@ -26,6 +26,8 @@ import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
 import MyOrders from "./pages/MyOrders";
 import Layout from "./pages/Layout";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFailed from "./pages/PaymentFailed";
 
 function Home() {
   // const location = useLocation();
@@ -127,8 +129,13 @@ function App() {
       <Route path="/login" element={<Login />} />
 
       <Route path="/signup" element={<Signup />} />
+
+      <Route path="/payment-success" element={<PaymentSuccess />} />
+
+      <Route path="/payment-failed" element={<PaymentFailed />} />
+
+    
     </Routes>
-    <Footer/>
     </>
   );
 }

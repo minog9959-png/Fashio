@@ -38,6 +38,38 @@ const MyOrders = () => {
     }
   };
 
+  //fetch Orders
+  const handlePayment = async (orderId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/stripe/create-checkout-session`,
+        {
+          orderId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Stripe Response:", response.data);
+
+      // Stripe Checkout page par redirect
+      window.location.href = response.data.url;
+
+    } catch (error) {
+      console.log("Payment Error:", error);
+
+      alert(
+        error.response?.data?.message ||
+        "Unable to start payment"
+      );
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -115,6 +147,15 @@ const MyOrders = () => {
                 <p className="text-lg font-bold">
                   Total: ${order.totalPrice}
                 </p>
+
+                {order.paymentStatus !== "Paid" && (
+                  <button
+                    onClick={() => handlePayment(order._id)}
+                    className="mt-4 bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+                  >
+                    Pay Now
+                  </button>
+                )}
 
               </div>
 

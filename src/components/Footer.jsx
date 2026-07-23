@@ -143,7 +143,7 @@ const Footer = () => {
                     <div className="max-w-[1320px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-5">
 
                         <p className="text-gray-400 text-sm text-center md:text-left">
-                            Copyright ©2026 All rights reserved | This template is made with ❤ by Colorlib
+                            Copyright ©2026 All rights reserved
                         </p>
 
                         <img
