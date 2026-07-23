@@ -38,7 +38,37 @@ const MyOrders = () => {
     }
   };
 
-  //fetch Orders
+  //Invoice download in pdf
+
+  const downloadInvoice = async (orderId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/invoice/${orderId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "blob",
+        }
+      );
+
+      const file = new Blob([response.data], {
+        type: "application/pdf",
+      });
+
+      const url = window.URL.createObjectURL(file);
+
+      window.open(url, "_blank");
+
+    } catch (error) {
+      console.log("Invoice Error:", error);
+      alert("Failed to open invoice");
+    }
+  };
+
+  //create strip checkout
   const handlePayment = async (orderId) => {
     try {
       const token = localStorage.getItem("token");
@@ -144,21 +174,33 @@ const MyOrders = () => {
 
               <div className="border-t pt-4 mt-4">
 
-                <p className="text-lg font-bold">
+                <p className="text-lg font-bold mb-4">
                   Total: ${order.totalPrice}
                 </p>
 
-                {order.paymentStatus !== "Paid" && (
-                  <button
-                    onClick={() => handlePayment(order._id)}
-                    className="mt-4 bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
-                  >
-                    Pay Now
-                  </button>
-                )}
+                <div className="flex gap-4 items-center">
+
+                  {order.paymentStatus !== "Paid" && (
+                    <button
+                      onClick={() => handlePayment(order._id)}
+                      className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+                    >
+                      Pay Now
+                    </button>
+                  )}
+
+                  {order.paymentStatus === "Paid" && (
+                    <button
+                      onClick={() => downloadInvoice(order._id)}
+                      className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+                    >
+                      View Invoice
+                    </button>
+                  )}
+
+                </div>
 
               </div>
-
             </div>
 
           ))}
