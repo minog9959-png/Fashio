@@ -28,6 +28,9 @@ import MyOrders from "./pages/MyOrders";
 import Layout from "./pages/Layout";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
 
 function Home() {
   // const location = useLocation();
@@ -134,7 +137,14 @@ function App() {
 
       <Route path="/payment-failed" element={<PaymentFailed />} />
 
-    
+      <Route path="/admin/login" element={<AdminLogin />} />
+
+      <Route path="/admin/dashboard" element={
+        <AdminProtectedRoute>
+          <AdminDashboard />
+        </AdminProtectedRoute>
+        } />
+
     </Routes>
     </>
   );
