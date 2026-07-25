@@ -31,6 +31,7 @@ import PaymentFailed from "./pages/PaymentFailed";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
+import AdminLayout from "./components/admin/AdminLayout";
 
 function Home() {
   // const location = useLocation();
@@ -47,25 +48,25 @@ function Home() {
   //   }
   // }, [location]);
 
-//   const location = useLocation();
-//   const navigate = useNavigate();
+  //   const location = useLocation();
+  //   const navigate = useNavigate();
 
-// useEffect(() => {
-//   const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-//   if (location.state?.success && token) {
-//     Swal.fire({
-//       title: "Welcome Back!",
-//       text: "You are an authorized user. Now you can shop anything from our store.",
-//       icon: "warning",
-//     });
+  //   if (location.state?.success && token) {
+  //     Swal.fire({
+  //       title: "Welcome Back!",
+  //       text: "You are an authorized user. Now you can shop anything from our store.",
+  //       icon: "warning",
+  //     });
 
-//     navigate("/",
-//        { replace: true,
-//         state: {} 
-//       });
-//   }
-// }, [location, navigate]);
+  //     navigate("/",
+  //        { replace: true,
+  //         state: {} 
+  //       });
+  //   }
+  // }, [location, navigate]);
 
   return (
     <>
@@ -86,66 +87,73 @@ function Home() {
 function App() {
   return (
     <>
-    <Routes>
+      <Routes>
 
-      <Route element={<Layout />} >
+        <Route element={<Layout />} >
 
-      {/* Pages with Header + footer */}
+          {/* Pages with Header + footer */}
 
-      <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
 
-      <Route path="/shop" element={
-        <ProtectedRoute>
-        <Shop />
-        </ProtectedRoute>
-        } />
+          <Route path="/shop" element={
+            <ProtectedRoute>
+              <Shop />
+            </ProtectedRoute>
+          } />
 
-      <Route path="/product/:id" element={
-        <ProtectedRoute>
-        <ProductDetails />
-        </ProtectedRoute>
-         } 
-       />
+          <Route path="/product/:id" element={
+            <ProtectedRoute>
+              <ProductDetails />
+            </ProtectedRoute>
+          }
+          />
 
-      <Route path="/cart" element={
-        <ProtectedRoute>
-        <Cart />
-        </ProtectedRoute>
-        } />
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          } />
 
-      <Route path="/wishlist" element={
-        <ProtectedRoute>
-        <Wishlist />
-        </ProtectedRoute>
-      }
-         />
+          <Route path="/wishlist" element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
+          }
+          />
 
-      <Route path="/order" element={
-        <ProtectedRoute>
-          <MyOrders />
-          </ProtectedRoute>}
-           />
+          <Route path="/order" element={
+            <ProtectedRoute>
+              <MyOrders />
+            </ProtectedRoute>}
+          />
 
-      </Route>
+        </Route>
 
-      {/* Pages without Header + footer */}
-      <Route path="/login" element={<Login />} />
+        {/* Pages without Header + footer */}
+        <Route path="/login" element={<Login />} />
 
-      <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} />
 
-      <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
 
-      <Route path="/payment-failed" element={<PaymentFailed />} />
+        <Route path="/payment-failed" element={<PaymentFailed />} />
 
-      <Route path="/admin/login" element={<AdminLogin />} />
+        {/* Admin Routes */}
 
-      <Route path="/admin/dashboard" element={
-        <AdminProtectedRoute>
-          <AdminDashboard />
-        </AdminProtectedRoute>
-        } />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
-    </Routes>
+        <Route
+          path="/admin"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout />
+            </AdminProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+        </Route>
+
+      </Routes>
     </>
   );
 }

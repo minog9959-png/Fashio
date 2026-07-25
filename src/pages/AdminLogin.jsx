@@ -40,28 +40,67 @@ const AdminLogin = () => {
   };
 
   return (
-    <div>
-      <h2>Admin Login</h2>
+    <div className="min-h-screen flex items-center justify-center bg-black/50">
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Admin Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <div className="bg-white w-[450px] rounded-lg p-8 shadow-xl">
 
-        <input
-          type="password"
-          placeholder="Admin Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        {/* Heading */}
+        <div className="text-center mb-8">
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+          <h2 className="text-2xl font-semibold text-gray-700">
+            Admin Login
+          </h2>
+
+          <p className="text-gray-400 mt-2">
+            Login to access your admin panel
+          </p>
+
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleLogin}>
+
+          {/* Email */}
+          <input
+            type="email"
+            placeholder="Admin Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded p-4 mb-5 outline-none focus:border-orange-500"
+          />
+
+          {/* Password */}
+          <input
+            type="password"
+            placeholder="Admin Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded p-4 mb-6 outline-none focus:border-orange-500"
+          />
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-orange-500 text-white py-4 rounded hover:bg-orange-600 duration-300 disabled:opacity-60"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+
+        </form>
+
+        {/* Close */}
+        <button
+          onClick={() => navigate("/")}
+          className="w-full mt-6 text-gray-500 hover:text-black"
+        >
+          Close
         </button>
-      </form>
+
+      </div>
+
     </div>
   );
 };
