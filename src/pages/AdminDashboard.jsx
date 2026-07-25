@@ -1,4 +1,54 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const AdminDashboard = () => {
+
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalProducts: 0,
+    totalOrders: 0,
+    totalRevenue: 0,
+  });
+
+  const [recentOrders, setRecentOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  //use effect
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const token = localStorage.getItem("adminToken");
+
+        const statsResponse = await axios.get(
+          `${import.meta.env.VITE_API_URL}/admin/dashboard/stats`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const ordersResponse = await axios.get(
+          "http://localhost:8000/api/admin/dashboard/recent-orders",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setStats(statsResponse.data.stats);
+        setRecentOrders(ordersResponse.data.orders);
+      } catch (error) {
+        console.log("Dashboard data error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
@@ -23,7 +73,7 @@ const AdminDashboard = () => {
           </p>
 
           <h2 className="mt-2 text-3xl font-bold text-gray-800">
-            120
+            {stats.totalUsers}
           </h2>
 
           <p className="mt-2 text-sm text-green-600">
@@ -38,7 +88,7 @@ const AdminDashboard = () => {
           </p>
 
           <h2 className="mt-2 text-3xl font-bold text-gray-800">
-            45
+            {stats.totalProducts}
           </h2>
 
           <p className="mt-2 text-sm text-green-600">
@@ -53,7 +103,7 @@ const AdminDashboard = () => {
           </p>
 
           <h2 className="mt-2 text-3xl font-bold text-gray-800">
-            86
+            {stats.totalOrders}
           </h2>
 
           <p className="mt-2 text-sm text-green-600">
@@ -68,7 +118,7 @@ const AdminDashboard = () => {
           </p>
 
           <h2 className="mt-2 text-3xl font-bold text-gray-800">
-            $4,250
+            ${stats.totalRevenue}
           </h2>
 
           <p className="mt-2 text-sm text-green-600">
@@ -87,55 +137,58 @@ const AdminDashboard = () => {
 
         <div className="overflow-x-auto">
 
-          <table className="w-full text-left">
+          {loading ? (
+            <p className="py-4 text-gray-500">
+              Loading orders...
+            </p>
+          ) : recentOrders.length === 0 ? (
+            <p className="py-4 text-gray-500">
+              No recent orders found.
+            </p>
+          ) : (
+            <table className="w-full text-left">
 
-            <thead>
-              <tr className="border-b text-sm text-gray-500">
-                <th className="pb-3">Order ID</th>
-                <th className="pb-3">Customer</th>
-                <th className="pb-3">Amount</th>
-                <th className="pb-3">Status</th>
-              </tr>
-            </thead>
+              <thead>
+                <tr className="border-b text-sm text-gray-500">
+                  <th className="pb-3">Order ID</th>
+                  <th className="pb-3">Customer</th>
+                  <th className="pb-3">Amount</th>
+                  <th className="pb-3">Status</th>
+                </tr>
+              </thead>
 
-            <tbody>
+              <tbody>
+                {recentOrders.map((order) => (
+                  <tr key={order._id} className="border-b">
 
-              <tr className="border-b">
-                <td className="py-4">#1001</td>
-                <td className="py-4">Ali</td>
-                <td className="py-4">$120</td>
-                <td className="py-4">
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-                    Paid
-                  </span>
-                </td>
-              </tr>
+                    <td className="py-4">
+                      #{order._id.slice(-6)}
+                    </td>
 
-              <tr className="border-b">
-                <td className="py-4">#1002</td>
-                <td className="py-4">Ahmed</td>
-                <td className="py-4">$80</td>
-                <td className="py-4">
-                  <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm text-yellow-700">
-                    Pending
-                  </span>
-                </td>
-              </tr>
+                    <td className="py-4">
+                      {order.user?.name}
+                    </td>
 
-              <tr>
-                <td className="py-4">#1003</td>
-                <td className="py-4">Sara</td>
-                <td className="py-4">$200</td>
-                <td className="py-4">
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-                    Paid
-                  </span>
-                </td>
-              </tr>
+                    <td className="py-4">
+                      ${order.totalPrice}
+                    </td>
 
-            </tbody>
+                    <td className="py-4">
+                      <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                        {order.paymentStatus}
+                      </span>
+                    </td>
 
-          </table>
+                    {/* <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                Paid
+              </span> */}
+
+                  </tr>
+                ))}
+              </tbody>
+
+            </table>
+          )}
 
         </div>
       </div>

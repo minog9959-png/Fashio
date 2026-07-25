@@ -32,6 +32,8 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
 import AdminLayout from "./components/admin/AdminLayout";
+import AdminUsers from "./pages/AdminUsers";
+import AdminProducts from "./pages/AdminProducts";
 
 function Home() {
   // const location = useLocation();
@@ -153,7 +155,14 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
         </Route>
 
+      // Registered Users in a dashboard
+      <Route path="admin/users" element={<AdminUsers />} />
+
+      // User Products in a dashboard
+      <Route path="admin/products" element={<AdminProducts />} />
+
       </Routes>
+
     </>
   );
 }
