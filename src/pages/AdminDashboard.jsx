@@ -29,7 +29,7 @@ const AdminDashboard = () => {
         );
 
         const ordersResponse = await axios.get(
-          "http://localhost:8000/api/admin/dashboard/recent-orders",
+          `${import.meta.env.VITE_API_URL}/admin/dashboard/recent-orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
