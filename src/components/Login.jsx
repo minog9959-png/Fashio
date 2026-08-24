@@ -3,9 +3,19 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+import app from "../firebase";
+
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const auth = getAuth(app);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,39 +28,96 @@ const Login = () => {
     });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   console.log(import.meta.env.VITE_API_URL);
+  //   try {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_API_URL}/form/login`,
+  //       {
+  //         email: formData.email,
+  //         password: formData.password,
+  //       }
+  //     );
+
+  //     console.log("Login Response:", response.data);
+  //     console.log("User ID:", response.data.userId);
+
+  //     localStorage.setItem("token", response.data.token);
+  //     localStorage.setItem("userId", response.data.userId);
+
+  //     if (location.state?.from === "/cart") {
+  //       navigate("/cart", { replace: true });
+  //     } else {
+  //       navigate("/", { replace: true });
+  //     }
+
+  //   } catch (error) {
+  //     console.log("Login Error:", error);
+
+  //     alert(
+  //       error.response?.data?.message || "Login Failed"
+  //     );
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    console.log(import.meta.env.VITE_API_URL);
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/form/login`,
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
+  try {
+    // 1. Login with Firebase
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      formData.email,
+      formData.password
+    );
 
-      console.log("Login Response:", response.data);
-      console.log("User ID:", response.data.userId);
+    const firebaseUser = userCredential.user;
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userId", response.data.userId);
-
-      if (location.state?.from === "/cart") {
-        navigate("/cart", { replace: true });
-      } else {
-        navigate("/", { replace: true });
-      }
-
-    } catch (error) {
-      console.log("Login Error:", error);
-
-      alert(
-        error.response?.data?.message || "Login Failed"
-      );
+    // 2. Check email verification
+    if (!firebaseUser.emailVerified) {
+      alert("Please verify your email before logging in.");
+      return;
     }
-  };
+
+    await auth.signOut();
+
+    // 3. Get Firebase ID Token
+    const idToken = await firebaseUser.getIdToken();
+
+    // 4. Send Firebase token to backend
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/form/firebase-login`,
+      {
+        idToken,
+      }
+    );
+
+    console.log("Firebase Login Response:", response.data);
+
+    // 5. Save your existing JWT
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("userId", response.data.userId);
+
+    // 6. Navigate
+    if (location.state?.from === "/cart") {
+      navigate("/cart", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
+
+  } catch (error) {
+    console.log("Login Error:", error);
+
+    alert(
+      error.response?.data?.message ||
+      error.code ||
+      "Login Failed"
+    );
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black/50">

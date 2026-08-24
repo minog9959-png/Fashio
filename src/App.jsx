@@ -39,6 +39,12 @@ import AdminOrders from "./pages/AdminOrders";
 
 import socket from "./socketConnection";
 
+// permission request in App
+import {
+  requestNotificationPermission,
+  listenForMessages,
+} from "./firebaseMessaging";
+
 function Home() {
 
   // for Socket.io
@@ -141,6 +147,16 @@ function App() {
        socket.off("newOrder");
     };
   }, []);
+
+
+  // permission request in App
+  useEffect(() => {
+  requestNotificationPermission();
+}, []);
+
+useEffect(() => {
+  requestNotificationPermission();
+}, []);
 
   return (
     <>

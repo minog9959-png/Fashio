@@ -2,9 +2,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 // import bcrypt from "bcryptjs";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+
+import app from "../firebase";
 
 const Signup = () => {
+
   const navigate = useNavigate();
+  const auth = getAuth(app);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -20,41 +29,91 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+  //   if (formData.password !== formData.confirmPassword) {
+  //     alert("Passwords do not match");
+  //     return;
+  //   }
     
-  try {
-    // console.log(import.meta.env.VITE_API_URL);
+  // try {
+  //   // console.log(import.meta.env.VITE_API_URL);
 
+  //   const response = await axios.post(
+  //     `${import.meta.env.VITE_API_URL}/form/signup`,
+  //     //  "http://localhost:8000/api/form/signup",
+  //     {
+  //       name: formData.name,
+  //       email: formData.email,
+  //       password: formData.password,
+  //       newpass: formData.confirmPassword,
+  //     }
+  //   );
+
+  //   // console.log(import.meta.env.VITE_API_URL);
+
+  //     alert(response.data.message);
+
+  //     navigate("/login");
+
+  //   } catch (error) {
+  //     console.log(error);
+  //     console.log(error.response);
+
+  //     alert(error.response?.data?.message || error.message);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  try {
+    // 1. Create Firebase user
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      formData.email,
+      formData.password
+    );
+
+    const firebaseUser = userCredential.user;
+
+    // 2. Send Firebase verification email
+    await sendEmailVerification(firebaseUser);
+
+    // 3. Get Firebase ID token
+    const idToken = await firebaseUser.getIdToken();
+
+    // 4. Send Firebase user to our backend
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/form/signup`,
-      //  "http://localhost:8000/api/form/signup",
+      `${import.meta.env.VITE_API_URL}/form/firebase-signup`,
       {
+        idToken,
         name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        newpass: formData.confirmPassword,
       }
     );
 
-    // console.log(import.meta.env.VITE_API_URL);
+    alert(
+      "Account created successfully. Please check your email to verify your account."
+    );
 
-      alert(response.data.message);
+    navigate("/login");
 
-      navigate("/login");
+  } catch (error) {
+    console.log("Firebase Signup Error:", error);
 
-    } catch (error) {
-      console.log(error);
-      console.log(error.response);
-
-      alert(error.response?.data?.message || error.message);
-    }
-  };
+    alert(
+      error.response?.data?.message ||
+      error.code ||
+      error.message
+    );
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black/50">
