@@ -6,8 +6,10 @@ import {
     FaShoppingBag,
     FaChevronDown,
     FaBoxOpen,
+    FaBell
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import socket from "../socketConnection";
 
 const Header = ({
     // selectedCategory,
@@ -24,6 +26,9 @@ const Header = ({
 
     const [wishlistCount, setWishlistCount] = useState(0);
     const [orderCount, setOrderCount] = useState(0);
+
+    const [notifications, setNotifications] = useState([]);
+    const [showNotifications, setShowNotifications] = useState(false);
 
     const [showCategories, setShowCategories] = useState(false);
 
@@ -158,7 +163,7 @@ const Header = ({
 
     useEffect(() => {
         const handleCartUpdated = () => {
-             console.log("Header received cartUpdated event");
+            console.log("Header received cartUpdated event");
             fetchCart();
         };
 
@@ -170,17 +175,17 @@ const Header = ({
     }, []);
 
     useEffect(() => {
-    const handleOrderUpdated = () => {
-        console.log("Header received orderUpdated event");
-        fetchOrders();
-    };
+        const handleOrderUpdated = () => {
+            console.log("Header received orderUpdated event");
+            fetchOrders();
+        };
 
-    window.addEventListener("orderUpdated", handleOrderUpdated);
+        window.addEventListener("orderUpdated", handleOrderUpdated);
 
-    return () => {
-        window.removeEventListener("orderUpdated", handleOrderUpdated);
-    };
-}, []);
+        return () => {
+            window.removeEventListener("orderUpdated", handleOrderUpdated);
+        };
+    }, []);
 
     // Close category dropdown when clicking outside
     useEffect(() => {
@@ -200,6 +205,28 @@ const Header = ({
                 "mousedown",
                 handleClickOutside
             );
+        };
+    }, []);
+
+    //socket notification
+    useEffect(() => {
+        const handleOrderStatusUpdated = (data) => {
+            console.log("Header received notification:", data);
+
+            setNotifications((prev) => [
+                ...prev,
+                {
+                    id: Date.now(),
+                    message: data.message,
+                    status: data.status,
+                },
+            ]);
+        };
+
+        socket.on("orderStatusUpdated", handleOrderStatusUpdated);
+
+        return () => {
+            socket.off("orderStatusUpdated", handleOrderStatusUpdated);
         };
     }, []);
 
@@ -292,6 +319,64 @@ const Header = ({
                     {/* Icons */}
 
                     <div className="flex items-center gap-6">
+
+                        {/* Notifications */}
+                        <div className="relative">
+                            <button
+                                onClick={() =>
+                                    setShowNotifications(!showNotifications)
+                                }
+                                className="relative"
+                            >
+                                <FaBell className="text-xl cursor-pointer hover:text-pink-500 duration-300" />
+
+                                {notifications.length > 0 && (
+                                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+                                        {notifications.length}
+                                    </span>
+                                )}
+                            </button>
+
+                            {/* Notification Dropdown */}
+                            {showNotifications && (
+                                <div className="absolute right-0 top-8 w-80 bg-white border border-gray-200 shadow-lg z-50">
+
+                                    <div className="px-4 py-3 border-b font-semibold">
+                                        Notifications
+                                    </div>
+
+                                    {notifications.length === 0 ? (
+                                        <p className="px-4 py-5 text-sm text-gray-500">
+                                            No notifications
+                                        </p>
+                                    ) : (
+                                        <div className="max-h-72 overflow-y-auto">
+                                            {notifications.map((notification) => (
+                                                <div
+                                                    key={notification.id}
+                                                    className="px-4 py-3 border-b hover:bg-gray-50"
+                                                >
+                                                    <div className="flex gap-3">
+                                                        <FaBell className="text-pink-500 mt-1" />
+
+                                                        <div>
+                                                            <p className="text-sm font-medium">
+                                                                {notification.message}
+                                                            </p>
+
+                                                            <p className="text-xs text-gray-500 mt-1">
+                                                                Status: {notification.status}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                </div>
+                            )}
+                        </div>
 
                         {/* Wishlist */}
                         <div className="relative">

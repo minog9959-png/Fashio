@@ -50,15 +50,15 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 w-full">
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h1 className="text-3xl sm:text-2xl font-bold text-gray-800">
           Admin Dashboard
         </h1>
 
-        <p className="mt-1 text-gray-500">
+        <p className="mt-1 sm:text-2xl text-gray-500">
           Welcome back, Admin! Here's what's happening with your store.
         </p>
       </div>
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
         {/* Users */}
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+        <div className="rounded-lg bg-white sm:p-6 p-4 shadow-sm">
           <p className="text-sm font-medium text-gray-500">
             Total Users
           </p>
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Recent Orders */}
-      <div className="mt-8 rounded-lg bg-white p-6 shadow-sm">
+      <div className="mt-8 rounded-lg bg-white p-4 sm:p-6 shadow-sm">
 
         <h2 className="mb-5 text-xl font-semibold text-gray-800">
           Recent Orders
@@ -146,7 +146,7 @@ const AdminDashboard = () => {
               No recent orders found.
             </p>
           ) : (
-            <table className="w-full text-left">
+            <table className="w-full min-w-[600px] text-left">
 
               <thead>
                 <tr className="border-b text-sm text-gray-500">

@@ -3,27 +3,27 @@ import AdminSidebar from "./AdminSidebar";
 import AdminTopbar from "./AdminTopbar";
 
 const AdminLayout = () => {
-  return (
-    <div className="min-h-screen bg-gray-100">
+ return (
+  <div className="min-h-screen bg-gray-100">
 
-      {/* Sidebar */}
-      <AdminSidebar />
+    {/* Sidebar */}
+    <AdminSidebar />
 
-      {/* Main Content */}
-      <main className="ml-64 min-h-screen">
+    {/* Main Content */}
+    <main className="ml-64 min-h-screen w-[calc(100%-16rem)]">
 
-        {/* Topbar */}
-        <AdminTopbar />
+      {/* Topbar */}
+      <AdminTopbar />
 
-        {/* Page Content */}
-        <section className="p-6">
-          <Outlet />
-        </section>
+      {/* Page Content */}
+      <section className="p-4 sm:p-6">
+        <Outlet />
+      </section>
 
-      </main>
+    </main>
 
-    </div>
-  );
+  </div>
+);
 };
 
 export default AdminLayout;

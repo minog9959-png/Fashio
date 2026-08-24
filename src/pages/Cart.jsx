@@ -28,7 +28,13 @@ const Cart = () => {
         }
       );
 
-      setCartItems(response.data.cartItems);
+      // setCartItems(response.data.cartItems);
+
+      const validCartItems = response.data.cartItems.filter(
+        (item) => item.product
+      );
+
+      setCartItems(validCartItems);
 
     } catch (error) {
       console.log(error);
@@ -194,7 +200,7 @@ const Cart = () => {
   }, []);
 
   const subtotal = cartItems.reduce((total, item) => {
-    return total + item.product.price * item.quantity;
+    return total + (item.product?.price || 0) * item.quantity;
   }, 0);
 
   if (loading) {
@@ -219,7 +225,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto py-15 px-4">
+    <div className="max-w-6xl sm:max-w-8xl mx-auto py-15 px-4">
 
       <h1 className="text-3xl font-bold mb-8">
         Shopping Cart
@@ -230,31 +236,31 @@ const Cart = () => {
 
           <div
             key={item._id}
-            className="flex justify-between items-center border rounded-lg p-5 mb-5"
+            className="flex justify-between items-center border rounded-lg p-5 sm:p-10 mb-5"
           >
 
             {/* Left Side */}
             <div className="flex items-center gap-6">
 
               <img
-                src={item.product.image}
-                alt={item.product.title}
+                src={item.product?.image}
+                alt={item.product?.title}
                 className="w-28 h-28 object-cover rounded"
               />
 
               <div>
 
                 <h2 className="text-2xl font-semibold">
-                  {item.product.title}
+                  {item.product?.title}
                 </h2>
 
                 <p className="mt-2">
-                  Price: ${item.product.price}
+                  Price: ${item.product?.price || 0}
                 </p>
 
                 <p className="mt-2 font-semibold">
                   Total: $
-                  {item.product.price * item.quantity}
+                  {(item.product?.price || 0) * item.quantity}
                 </p>
 
               </div>
@@ -262,7 +268,7 @@ const Cart = () => {
             </div>
 
             {/* Right Side */}
-            <div className="text-center">
+            <div className="text-center sm:pl-[30px]">
 
               <p className="mb-3 font-semibold">
                 Quantity

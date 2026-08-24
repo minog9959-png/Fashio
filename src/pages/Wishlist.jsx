@@ -80,21 +80,21 @@ const Wishlist = () => {
                         <div key={item._id} className="border rounded-lg p-4">
 
                             <img
-                                src={item.product.image}
-                                alt={item.product.title}
+                                src={item.product?.image || ""}
+                                alt={item.product?.title || "Product Unavailable"}
                                 className="w-full h-64 object-cover rounded"
                             />
 
                             <h2 className="text-lg font-semibold mt-4">
-                                {item.product.title}
+                                {item.product?.title || "Product Unavailable"}
                             </h2>
 
                             <p className="text-gray-500 mt-2">
-                                {item.product.category?.name}
+                                {item.product?.category?.name || "N/A"}
                             </p>
 
                             <p className="text-xl font-bold text-red-500 mt-2">
-                                ${item.product.price}
+                                ${item.product?.price || 0}
                             </p>
 
                             <button

@@ -37,7 +37,21 @@ import AdminProducts from "./pages/AdminProducts";
 import AdminCategories from "./pages/AdminCategories";
 import AdminOrders from "./pages/AdminOrders";
 
+import socket from "./socketConnection";
+
 function Home() {
+
+  // for Socket.io
+  //   useEffect(() => {
+  //   socket.on("connect", () => {
+  //     console.log("Connected to Socket.IO:", socket.id);
+  //   });
+
+  //   return () => {
+  //     socket.off("connect");
+  //   };
+  // }, []);
+
   // const location = useLocation();
 
   // useEffect(() => {
@@ -89,6 +103,45 @@ function Home() {
 }
 
 function App() {
+  // for Socket.io
+  // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     console.log("Connected to Socket.IO:", socket.id);
+  //   });
+
+  //   socket.on("orderStatusUpdated", (data) => {
+  //     console.log("Order Status Updated:", data);
+  //   });
+
+  //   return () => {
+  //     socket.off("connect");
+  //     socket.off("orderStatusUpdated");
+  //   };
+  // }, []);
+
+  //updated
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+
+    socket.on("connect", () => {
+      console.log("Connected to Socket.IO:", socket.id);
+
+      if (userId) {
+        socket.emit("joinUserRoom", userId);
+        console.log("Joined user room:", userId);
+      }
+    });
+
+    socket.on("newOrder", (data) => {
+      console.log("New Order Received:", data);
+    });
+
+    return () => {
+      socket.off("connect");
+       socket.off("newOrder");
+    };
+  }, []);
+
   return (
     <>
       <Routes>
@@ -158,16 +211,16 @@ function App() {
         </Route>
 
       // Registered Users in a dashboard
-      <Route path="admin/users" element={<AdminUsers />} />
+        <Route path="admin/users" element={<AdminUsers />} />
 
       // Admin Products in a dashboard
-      <Route path="admin/products" element={<AdminProducts />} />
+        <Route path="admin/products" element={<AdminProducts />} />
 
       // Admin categories in a dashboard
-      <Route path="admin/categories" element={<AdminCategories />} />
+        <Route path="admin/categories" element={<AdminCategories />} />
 
       // Admin order in a dashboard
-      <Route path="admin/orders" element={<AdminOrders />} />
+        <Route path="admin/orders" element={<AdminOrders />} />
 
       </Routes>
 
