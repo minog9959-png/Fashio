@@ -230,10 +230,14 @@ const Header = ({
         ]);
     };
 
-    socket.on("orderStatusUpdated", handleOrderStatusUpdated);
-
+    if(socket){
+          socket.on("orderStatusUpdated", handleOrderStatusUpdated);
+    }
+  
     return () => {
-        socket.off("orderStatusUpdated", handleOrderStatusUpdated);
+        if(socket){
+            socket.off("orderStatusUpdated", handleOrderStatusUpdated);
+        }  
     };
 }, []);
 
