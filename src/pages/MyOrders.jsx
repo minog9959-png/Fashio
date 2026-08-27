@@ -137,12 +137,10 @@ useEffect(() => {
     );
   };
 
-  if (socket) {
   socket.on(
     "orderStatusUpdated",
     handleOrderStatusUpdated
   );
-}
 
   // =========================
   // FIREBASE
@@ -199,12 +197,10 @@ useEffect(() => {
 
   return () => {
 
-    if (socket) {
   socket.off(
     "orderStatusUpdated",
     handleOrderStatusUpdated
   );
-}
 
     window.removeEventListener(
       "firebaseOrderStatusUpdated",

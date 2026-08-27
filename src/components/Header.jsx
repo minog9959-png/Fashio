@@ -229,15 +229,11 @@ const Header = ({
             },
         ]);
     };
-
-    if(socket){
           socket.on("orderStatusUpdated", handleOrderStatusUpdated);
-    }
   
     return () => {
-        if(socket){
+    
             socket.off("orderStatusUpdated", handleOrderStatusUpdated);
-        }  
     };
 }, []);
 
