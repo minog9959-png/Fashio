@@ -107,28 +107,48 @@ const MyOrders = () => {
 
 
   // update of socket.io and added
-  useEffect(() => {
+useEffect(() => {
   fetchOrders();
 
-  const handleOrderStatusUpdated = (data) => {
-    console.log("MyOrders received status update:", data);
+  const userId = localStorage.getItem("userId");
 
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order._id === data.orderId
-          ? {
-              ...order,
-              status: data.status,
-            }
-          : order
-      )
-    );
+  console.log("👤 MyOrders User ID:", userId);
+
+  const handleOrderStatusUpdated = (data) => {
+    console.log("🔔 MyOrders received status update:", data);
+
+    setOrders((prevOrders) => {
+      console.log("📦 Current Orders:", prevOrders);
+
+      return prevOrders.map((order) => {
+        console.log(
+          "Comparing:",
+          String(order._id),
+          "with",
+          String(data.orderId)
+        );
+
+        if (String(order._id) === String(data.orderId)) {
+          console.log("✅ Matching order found!");
+
+          return {
+            ...order,
+            status: data.status,
+          };
+        }
+
+        return order;
+      });
+    });
   };
 
   socket.on("orderStatusUpdated", handleOrderStatusUpdated);
 
+  console.log("🟢 Socket listener registered");
+
   return () => {
     socket.off("orderStatusUpdated", handleOrderStatusUpdated);
+    console.log("🔴 Socket listener removed");
   };
 }, []);
 

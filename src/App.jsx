@@ -155,7 +155,7 @@ function App() {
 }, []);
 
 useEffect(() => {
-  requestNotificationPermission();
+  listenForMessages();
 }, []);
 
   return (
