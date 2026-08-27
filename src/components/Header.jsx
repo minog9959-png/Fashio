@@ -10,6 +10,10 @@ import {
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import socket from "../socketConnection";
+import {
+  requestNotificationPermission,
+  listenForMessages,
+} from "../firebaseMessaging";
 
 const Header = ({
     // selectedCategory,
@@ -229,6 +233,37 @@ const Header = ({
             socket.off("orderStatusUpdated", handleOrderStatusUpdated);
         };
     }, []);
+
+useEffect(() => {
+    let unsubscribe;
+
+    const setupNotifications = async () => {
+        await requestNotificationPermission();
+
+        unsubscribe = listenForMessages((notification) => {
+            console.log(
+                "🔔 Header received Firebase notification:",
+                notification
+            );
+
+            setNotifications((prev) => [
+                ...prev,
+                notification,
+            ]);
+
+            // Refresh orders
+            fetchOrders();
+        });
+    };
+
+    setupNotifications();
+
+    return () => {
+        if (unsubscribe) {
+            unsubscribe();
+        }
+    };
+}, []);
 
     return (
         <header className="border-b border-gray-200 bg-white">

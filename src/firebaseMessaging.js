@@ -69,23 +69,46 @@ export const requestNotificationPermission = async () => {
   }
 };
 
-
-export const listenForMessages = () => {
-  onMessage(messaging, (payload) => {
+export const listenForMessages = (onNotificationReceived) => {
+  const unsubscribe = onMessage(messaging, (payload) => {
     console.log("🔔 Foreground notification received:", payload);
 
     const title =
       payload.notification?.title || "Fashio Notification";
 
     const body =
-      payload.notification?.body || "You have a new notification.";
+      payload.notification?.body ||
+      "You have a new notification.";
+
+    const notificationData = {
+      id: Date.now(),
+      message: body,
+      status: payload.data?.status || "",
+      orderId: payload.data?.orderId || "",
+    };
+
+    console.log("🔔 Notification data:", notificationData);
+
+    // Send to the component that called listenForMessages
+    if (onNotificationReceived) {
+      onNotificationReceived(notificationData);
+    }
+
+    // Send notification event globally
+    window.dispatchEvent(
+      new CustomEvent("firebaseOrderStatusUpdated", {
+        detail: notificationData,
+      })
+    );
 
     // Browser notification
     if (Notification.permission === "granted") {
       new Notification(title, {
-        body,
+        body: body,
         icon: "/favicon.ico",
       });
     }
   });
+
+  return unsubscribe;
 };

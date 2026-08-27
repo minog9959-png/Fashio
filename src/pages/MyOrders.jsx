@@ -114,22 +114,17 @@ useEffect(() => {
 
   console.log("👤 MyOrders User ID:", userId);
 
+  // =========================
+  // SOCKET.IO
+  // =========================
+
   const handleOrderStatusUpdated = (data) => {
-    console.log("🔔 MyOrders received status update:", data);
+    console.log("🔔 Socket status update:", data);
 
-    setOrders((prevOrders) => {
-      console.log("📦 Current Orders:", prevOrders);
-
-      return prevOrders.map((order) => {
-        console.log(
-          "Comparing:",
-          String(order._id),
-          "with",
-          String(data.orderId)
-        );
-
+    setOrders((prevOrders) =>
+      prevOrders.map((order) => {
         if (String(order._id) === String(data.orderId)) {
-          console.log("✅ Matching order found!");
+          console.log("✅ Socket matching order found!");
 
           return {
             ...order,
@@ -138,17 +133,83 @@ useEffect(() => {
         }
 
         return order;
-      });
-    });
+      })
+    );
   };
 
-  socket.on("orderStatusUpdated", handleOrderStatusUpdated);
+  socket.on(
+    "orderStatusUpdated",
+    handleOrderStatusUpdated
+  );
 
-  console.log("🟢 Socket listener registered");
+
+  // =========================
+  // FIREBASE
+  // =========================
+
+  const handleFirebaseOrderUpdate = (event) => {
+    const data = event.detail;
+
+    console.log(
+      "🔥 MyOrders Firebase update:",
+      data
+    );
+
+    if (!data?.orderId || !data?.status) {
+      console.log(
+        "⚠️ Firebase notification missing orderId/status"
+      );
+      return;
+    }
+
+    setOrders((prevOrders) =>
+      prevOrders.map((order) => {
+        if (
+          String(order._id) ===
+          String(data.orderId)
+        ) {
+          console.log(
+            "✅ Firebase matching order found!"
+          );
+
+          return {
+            ...order,
+            status: data.status,
+          };
+        }
+
+        return order;
+      })
+    );
+
+    // Also fetch latest data from database
+    fetchOrders();
+  };
+
+  window.addEventListener(
+    "firebaseOrderStatusUpdated",
+    handleFirebaseOrderUpdate
+  );
+
+
+  console.log(
+    "🟢 MyOrders listeners registered"
+  );
 
   return () => {
-    socket.off("orderStatusUpdated", handleOrderStatusUpdated);
-    console.log("🔴 Socket listener removed");
+    socket.off(
+      "orderStatusUpdated",
+      handleOrderStatusUpdated
+    );
+
+    window.removeEventListener(
+      "firebaseOrderStatusUpdated",
+      handleFirebaseOrderUpdate
+    );
+
+    console.log(
+      "🔴 MyOrders listeners removed"
+    );
   };
 }, []);
 
