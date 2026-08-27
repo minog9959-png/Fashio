@@ -137,10 +137,15 @@ useEffect(() => {
     );
   };
 
-  socket.on(
-    "orderStatusUpdated",
-    handleOrderStatusUpdated
-  );
+  // Socket available ho to listener register karo
+  if (socket) {
+    socket.on(
+      "orderStatusUpdated",
+      handleOrderStatusUpdated
+    );
+
+    console.log("🟢 Socket listener registered");
+  }
 
   // =========================
   // FIREBASE
@@ -149,10 +154,7 @@ useEffect(() => {
   const handleFirebaseOrderUpdate = (event) => {
     const data = event.detail;
 
-    console.log(
-      "🔥 MyOrders Firebase update:",
-      data
-    );
+    console.log("🔥 MyOrders Firebase update:", data);
 
     if (!data?.orderId || !data?.status) {
       console.log(
@@ -164,8 +166,7 @@ useEffect(() => {
     setOrders((prevOrders) =>
       prevOrders.map((order) => {
         if (
-          String(order._id) ===
-          String(data.orderId)
+          String(order._id) === String(data.orderId)
         ) {
           console.log(
             "✅ Firebase matching order found!"
@@ -181,7 +182,7 @@ useEffect(() => {
       })
     );
 
-    // Also fetch latest data from database
+    // Database se latest order bhi fetch
     fetchOrders();
   };
 
@@ -190,29 +191,30 @@ useEffect(() => {
     handleFirebaseOrderUpdate
   );
 
+  console.log("🟢 MyOrders listeners registered");
 
-  console.log(
-    "🟢 MyOrders listeners registered"
-  );
+  // =========================
+  // CLEANUP
+  // =========================
 
   return () => {
+    if (socket) {
+      socket.off(
+        "orderStatusUpdated",
+        handleOrderStatusUpdated
+      );
 
-  socket.off(
-    "orderStatusUpdated",
-    handleOrderStatusUpdated
-  );
+      console.log("🔴 Socket listener removed");
+    }
 
     window.removeEventListener(
       "firebaseOrderStatusUpdated",
       handleFirebaseOrderUpdate
     );
 
-    console.log(
-      "🔴 MyOrders listeners removed"
-    );
+    console.log("🔴 Firebase listener removed");
   };
 }, []);
-
   if (loading) {
     return <h2>Loading Orders...</h2>;
   }

@@ -212,13 +212,15 @@ const Header = ({
         };
     }, []);
 
-    //socket notification
-
-    useEffect(() => {
-    if (!socket) return;
+    // Socket notification
+useEffect(() => {
+    if (!socket) {
+        console.log("⚠️ Socket is not available");
+        return;
+    }
 
     const handleOrderStatusUpdated = (data) => {
-        console.log("Header Socket notification:", data);
+        console.log("🔔 Header Socket notification:", data);
 
         setNotifications((prev) => [
             ...prev,
@@ -228,12 +230,25 @@ const Header = ({
                 status: data.status,
             },
         ]);
+
+        // Orders count/data refresh
+        fetchOrders();
     };
-          socket.on("orderStatusUpdated", handleOrderStatusUpdated);
-  
+
+    socket.on(
+        "orderStatusUpdated",
+        handleOrderStatusUpdated
+    );
+
+    console.log("🟢 Header Socket listener registered");
+
     return () => {
-    
-            socket.off("orderStatusUpdated", handleOrderStatusUpdated);
+        socket.off(
+            "orderStatusUpdated",
+            handleOrderStatusUpdated
+        );
+
+        console.log("🔴 Header Socket listener removed");
     };
 }, []);
 
