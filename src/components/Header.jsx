@@ -213,26 +213,29 @@ const Header = ({
     }, []);
 
     //socket notification
+
     useEffect(() => {
-        const handleOrderStatusUpdated = (data) => {
-            console.log("Header received notification:", data);
+    if (!socket) return;
 
-            setNotifications((prev) => [
-                ...prev,
-                {
-                    id: Date.now(),
-                    message: data.message,
-                    status: data.status,
-                },
-            ]);
-        };
+    const handleOrderStatusUpdated = (data) => {
+        console.log("Header Socket notification:", data);
 
-        socket.on("orderStatusUpdated", handleOrderStatusUpdated);
+        setNotifications((prev) => [
+            ...prev,
+            {
+                id: Date.now(),
+                message: data.message,
+                status: data.status,
+            },
+        ]);
+    };
 
-        return () => {
-            socket.off("orderStatusUpdated", handleOrderStatusUpdated);
-        };
-    }, []);
+    socket.on("orderStatusUpdated", handleOrderStatusUpdated);
+
+    return () => {
+        socket.off("orderStatusUpdated", handleOrderStatusUpdated);
+    };
+}, []);
 
 useEffect(() => {
     let unsubscribe;
