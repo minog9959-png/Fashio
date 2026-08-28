@@ -107,16 +107,13 @@ const MyOrders = () => {
 
 
   // update of socket.io and added
-useEffect(() => {
+
+  useEffect(() => {
   fetchOrders();
 
   const userId = localStorage.getItem("userId");
 
   console.log("👤 MyOrders User ID:", userId);
-
-  // =========================
-  // SOCKET.IO
-  // =========================
 
   const handleOrderStatusUpdated = (data) => {
     console.log("🔔 Socket status update:", data);
@@ -124,7 +121,7 @@ useEffect(() => {
     setOrders((prevOrders) =>
       prevOrders.map((order) => {
         if (String(order._id) === String(data.orderId)) {
-          console.log("✅ Socket matching order found!");
+          console.log("✅ Matching order found!");
 
           return {
             ...order,
@@ -137,65 +134,18 @@ useEffect(() => {
     );
   };
 
-  // Socket available ho to listener register karo
-  if (socket) {
+  if (socket && userId) {
+    socket.emit("joinUserRoom", userId);
+
+    console.log("👤 Joined user room:", userId);
+
     socket.on(
       "orderStatusUpdated",
       handleOrderStatusUpdated
     );
 
-    console.log("🟢 Socket listener registered");
+    console.log("🟢 MyOrders Socket listener registered");
   }
-
-  // =========================
-  // FIREBASE
-  // =========================
-
-  const handleFirebaseOrderUpdate = (event) => {
-    const data = event.detail;
-
-    console.log("🔥 MyOrders Firebase update:", data);
-
-    if (!data?.orderId || !data?.status) {
-      console.log(
-        "⚠️ Firebase notification missing orderId/status"
-      );
-      return;
-    }
-
-    setOrders((prevOrders) =>
-      prevOrders.map((order) => {
-        if (
-          String(order._id) === String(data.orderId)
-        ) {
-          console.log(
-            "✅ Firebase matching order found!"
-          );
-
-          return {
-            ...order,
-            status: data.status,
-          };
-        }
-
-        return order;
-      })
-    );
-
-    // Database se latest order bhi fetch
-    fetchOrders();
-  };
-
-  window.addEventListener(
-    "firebaseOrderStatusUpdated",
-    handleFirebaseOrderUpdate
-  );
-
-  console.log("🟢 MyOrders listeners registered");
-
-  // =========================
-  // CLEANUP
-  // =========================
 
   return () => {
     if (socket) {
@@ -204,17 +154,11 @@ useEffect(() => {
         handleOrderStatusUpdated
       );
 
-      console.log("🔴 Socket listener removed");
+      console.log("🔴 MyOrders Socket listener removed");
     }
-
-    window.removeEventListener(
-      "firebaseOrderStatusUpdated",
-      handleFirebaseOrderUpdate
-    );
-
-    console.log("🔴 Firebase listener removed");
   };
 }, []);
+
   if (loading) {
     return <h2>Loading Orders...</h2>;
   }
