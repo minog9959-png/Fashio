@@ -101,9 +101,9 @@ const MyOrders = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchOrders();
-  // }, []);
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
 
   // update of socket.io and added
