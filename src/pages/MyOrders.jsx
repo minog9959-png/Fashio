@@ -109,53 +109,39 @@ const MyOrders = () => {
   // update of socket.io and added
 
   useEffect(() => {
-  fetchOrders();
+  if (!socket) return;
 
   const userId = localStorage.getItem("userId");
 
-  console.log("👤 MyOrders User ID:", userId);
+  if (!userId) return;
+
+  socket.emit("joinUserRoom", userId);
 
   const handleOrderStatusUpdated = (data) => {
-    console.log("🔔 Socket status update:", data);
+    console.log("🔔 Status update:", data);
 
     setOrders((prevOrders) =>
-      prevOrders.map((order) => {
-        if (String(order._id) === String(data.orderId)) {
-          console.log("✅ Matching order found!");
-
-          return {
-            ...order,
-            status: data.status,
-          };
-        }
-
-        return order;
-      })
+      prevOrders.map((order) =>
+        String(order._id) === String(data.orderId)
+          ? {
+              ...order,
+              status: data.status,
+            }
+          : order
+      )
     );
   };
 
-  if (socket && userId) {
-    socket.emit("joinUserRoom", userId);
+  socket.on(
+    "orderStatusUpdated",
+    handleOrderStatusUpdated
+  );
 
-    console.log("👤 Joined user room:", userId);
-
-    socket.on(
+  return () => {
+    socket.off(
       "orderStatusUpdated",
       handleOrderStatusUpdated
     );
-
-    console.log("🟢 MyOrders Socket listener registered");
-  }
-
-  return () => {
-    if (socket) {
-      socket.off(
-        "orderStatusUpdated",
-        handleOrderStatusUpdated
-      );
-
-      console.log("🔴 MyOrders Socket listener removed");
-    }
   };
 }, []);
 

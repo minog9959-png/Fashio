@@ -7,14 +7,27 @@
 // export default socket;
 
 
+// import { io } from "socket.io-client";
+
+// let socket = null;
+
+// if (import.meta.env.MODE !== "production") {
+//   socket = io("http://localhost:8000", {
+//     transports: ["websocket"],
+//   });
+// }
+
+// export default socket;
+
 import { io } from "socket.io-client";
 
-let socket = null;
-
-if (import.meta.env.MODE !== "production") {
-  socket = io("http://localhost:8000", {
+const socket = io(
+  import.meta.env.DEV
+    ? "http://localhost:8000/api"
+    : import.meta.env.VITE_SOCKET_URL,
+  {
     transports: ["websocket"],
-  });
-}
+  }
+);
 
 export default socket;
