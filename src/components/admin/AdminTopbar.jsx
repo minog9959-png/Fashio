@@ -18,26 +18,49 @@ const AdminTopbar = () => {
   };
 
   // useEffect admin recieved new order notification
+  // useEffect(() => {
+  //   const handleNewOrder = (data) => {
+  //     console.log("Admin received new order:", data);
+
+  //     setNotifications((prev) => [
+  //       ...prev,
+  //       {
+  //         id: Date.now(),
+  //         message: data.message,
+  //         orderId: data.orderId,
+  //       },
+  //     ]);
+  //   };
+
+  //   socket.on("newOrder", handleNewOrder);
+
+  //   return () => {
+  //     socket.off("newOrder", handleNewOrder);
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const handleNewOrder = (data) => {
-      console.log("Admin received new order:", data);
+  if (!socket) return;
 
-      setNotifications((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          message: data.message,
-          orderId: data.orderId,
-        },
-      ]);
-    };
+  const handleNewOrder = (data) => {
+    console.log("Admin received new order:", data);
 
-    socket.on("newOrder", handleNewOrder);
+    setNotifications((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        message: data.message,
+        orderId: data.orderId,
+      },
+    ]);
+  };
 
-    return () => {
-      socket.off("newOrder", handleNewOrder);
-    };
-  }, []);
+  socket.on("newOrder", handleNewOrder);
+
+  return () => {
+    socket.off("newOrder", handleNewOrder);
+  };
+}, []);
 
   return (
     <header className="h-20 bg-white shadow-sm flex items-center justify-between px-8">
