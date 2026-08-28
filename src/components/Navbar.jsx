@@ -84,9 +84,13 @@ const Navbar = () => {
           BLOG
         </li>
 
-        <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+        <Link to="/contact">
+
+         <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
           CONTACT
         </li>
+        
+        </Link>
 
       </ul>
 

@@ -36,6 +36,7 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminProducts from "./pages/AdminProducts";
 import AdminCategories from "./pages/AdminCategories";
 import AdminOrders from "./pages/AdminOrders";
+import Contact from "./pages/Contact";
 
 import socket from "./socketConnection";
 
@@ -200,6 +201,9 @@ useEffect(() => {
             </ProtectedRoute>}
           />
 
+        {/* Contact */}
+        <Route path="/contact" element={<Contact />} />
+
         </Route>
 
         {/* Pages without Header + footer */}
@@ -226,16 +230,16 @@ useEffect(() => {
           <Route path="dashboard" element={<AdminDashboard />} />
         </Route>
 
-      // Registered Users in a dashboard
+      {/* Registered Users in a dashboard */}
         <Route path="admin/users" element={<AdminUsers />} />
 
-      // Admin Products in a dashboard
+      {/* Admin Products in a dashboard */}
         <Route path="admin/products" element={<AdminProducts />} />
 
-      // Admin categories in a dashboard
+      {/* Admin categories in a dashboard */}
         <Route path="admin/categories" element={<AdminCategories />} />
 
-      // Admin order in a dashboard
+      {/* Admin order in a dashboard */}
         <Route path="admin/orders" element={<AdminOrders />} />
 
       </Routes>
