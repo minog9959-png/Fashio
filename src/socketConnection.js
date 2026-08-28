@@ -34,12 +34,8 @@
 
 import { io } from "socket.io-client";
 
-let socket = null;
-
-if (import.meta.env.DEV) {
-  socket = io("http://localhost:8000", {
-    transports: ["websocket"],
-  });
-}
+const socket = io(import.meta.env.VITE_SOCKET_URL, {
+  transports: ["websocket"],
+});
 
 export default socket;
