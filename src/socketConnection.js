@@ -23,8 +23,8 @@ import { io } from "socket.io-client";
 
 const socket = io(
   import.meta.env.DEV
-    ? "http://localhost:8000/api"
-    : import.meta.env.VITE_SOCKET_URL,
+    ? "http://localhost:8000"
+    : import.meta.env.VITE_API_URL.replace("/api", ""),
   {
     transports: ["websocket"],
   }
