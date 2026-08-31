@@ -13,7 +13,60 @@ import {
 
 import payment from "../assets/images/payment-method.png";
 
+// import newletter subscription
+import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 const Footer = () => {
+
+    // newletter subscription hooks
+    const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    // newletter subscription Submit Handle
+    const handleNewsletterSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!email) {
+            Swal.fire({
+                icon: "warning",
+                title: "Email Required",
+                text: "Please enter your email address.",
+            });
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/newsletter`,
+                { email }
+            );
+
+            Swal.fire({
+                icon: "success",
+                title: "Subscribed!",
+                text: response.data.message,
+                timer: 2000,
+                showConfirmButton: false,
+            });
+
+            setEmail("");
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Subscription Failed",
+                text:
+                    error.response?.data?.message ||
+                    "Something went wrong. Please try again.",
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <footer className="bg-[#191919] text-white pt-20 overflow-hidden">
 
@@ -118,18 +171,22 @@ const Footer = () => {
                             Get E-mail updates about our latest shop and special offers.
                         </p>
 
-                        <form className="flex w-full">
+                        <form className="flex w-full"
+                            onSubmit={handleNewsletterSubmit}>
 
                             <input
                                 type="email"
                                 placeholder="Enter Your Mail"
                                 className="flex-1 min-w-0 h-14 px-5 bg-[#303030] text-white outline-none"
+                                value={email} onChange={(e) => setEmail(e.target.value)}
                             />
 
-                            <button
-                                className="h-14 px-8 shrink-0 bg-[#E7AB3C] text-white font-semibold hover:bg-[#d89d32] duration-300"
-                            >
-                                SUBSCRIBE
+                            <button type="submit" disabled={loading}
+                                className="h-14 px-8 shrink-0 bg-[#E7AB3C] text-white font-semibold hover:bg-[#d89d32] duration-300">
+                                {/* SUBSCRIBE */}
+                                {
+                                    loading ? "SUBSCRIBING...." : "SUBSCRIBE"
+                                }
                             </button>
 
                         </form>
