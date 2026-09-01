@@ -6,13 +6,14 @@ import {
     FaShoppingBag,
     FaChevronDown,
     FaBoxOpen,
-    FaBell
+    FaBell,
+    FaUser
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import socket from "../socketConnection";
 import {
-  requestNotificationPermission,
-  listenForMessages,
+    requestNotificationPermission,
+    listenForMessages,
 } from "../firebaseMessaging";
 
 const Header = ({
@@ -214,60 +215,60 @@ const Header = ({
 
     // Socket notification
     useEffect(() => {
-    if (!socket) return;
+        if (!socket) return;
 
-    const handleOrderStatusUpdated = (data) => {
-        console.log("Header Socket notification:", data);
-
-        setNotifications((prev) => [
-            ...prev,
-            {
-                id: Date.now(),
-                message: data.message,
-                status: data.status,
-            },
-        ]);
-
-        fetchOrders();
-    };
-
-    socket.on("orderStatusUpdated", handleOrderStatusUpdated);
-
-    return () => {
-        socket.off("orderStatusUpdated", handleOrderStatusUpdated);
-    };
-}, []);
-
-useEffect(() => {
-    let unsubscribe;
-
-    const setupNotifications = async () => {
-        await requestNotificationPermission();
-
-        unsubscribe = listenForMessages((notification) => {
-            console.log(
-                "🔔 Header received Firebase notification:",
-                notification
-            );
+        const handleOrderStatusUpdated = (data) => {
+            console.log("Header Socket notification:", data);
 
             setNotifications((prev) => [
                 ...prev,
-                notification,
+                {
+                    id: Date.now(),
+                    message: data.message,
+                    status: data.status,
+                },
             ]);
 
-            // Refresh orders
             fetchOrders();
-        });
-    };
+        };
 
-    setupNotifications();
+        socket.on("orderStatusUpdated", handleOrderStatusUpdated);
 
-    return () => {
-        if (unsubscribe) {
-            unsubscribe();
-        }
-    };
-}, []);
+        return () => {
+            socket.off("orderStatusUpdated", handleOrderStatusUpdated);
+        };
+    }, []);
+
+    useEffect(() => {
+        let unsubscribe;
+
+        const setupNotifications = async () => {
+            await requestNotificationPermission();
+
+            unsubscribe = listenForMessages((notification) => {
+                console.log(
+                    "🔔 Header received Firebase notification:",
+                    notification
+                );
+
+                setNotifications((prev) => [
+                    ...prev,
+                    notification,
+                ]);
+
+                // Refresh orders
+                fetchOrders();
+            });
+        };
+
+        setupNotifications();
+
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+    }, []);
 
     return (
         <header className="border-b border-gray-200 bg-white">
@@ -457,6 +458,13 @@ useEffect(() => {
                         <p className="font-semibold">
                             ${cartTotal.toFixed(2)}
                         </p>
+
+                        {/* Profile */}
+                        <div className="relative">
+                            <Link to="/profile">
+                                <FaUser className="text-lg cursor-pointer hover:text-pink-500 duration-300" />
+                            </Link>
+                        </div>
 
                     </div>
 
