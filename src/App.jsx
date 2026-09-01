@@ -45,6 +45,8 @@ import {
   requestNotificationPermission,
   listenForMessages,
 } from "./firebaseMessaging";
+import AdminNewsletter from "./pages/AdminNewsletter";
+import Profile from "./pages/Profile";
 
 function Home() {
 
@@ -241,6 +243,16 @@ useEffect(() => {
 
       {/* Admin order in a dashboard */}
         <Route path="admin/orders" element={<AdminOrders />} />
+
+      {/* Admin order in a dashboard */}
+        <Route path="admin/newsletter" element={<AdminNewsletter/>} />
+
+      {/* user Profile */}
+        <Route path="/profile" element={
+          <ProtectedRoute>
+          <Profile/>
+          </ProtectedRoute>
+        } />
 
       </Routes>
 

@@ -84,6 +84,20 @@ const AdminSidebar = () => {
           <span>Users</span>
         </NavLink>
 
+        <NavLink
+          to="/admin/newsletter"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition ${
+              isActive
+                ? "bg-orange-500 text-white"
+                : "text-gray-600 hover:bg-orange-50 hover:text-orange-500"
+            }`
+          }
+        >
+          <span>👥</span>
+          <span>Newsletter</span>
+        </NavLink>
+
       </nav>
 
     </aside>
