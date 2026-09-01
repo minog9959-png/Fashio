@@ -427,13 +427,13 @@ const AdminProducts = () => {
                                             >
                                                 Edit
                                             </button>
-                        
+
                                             <button
                                                 className="rounded bg-red-100 px-3 py-1 text-sm text-red-600 ml-3"
                                                 onClick={() => handleDeleteProduct(product._id)}
                                             >
                                                 Delete
-                                            </button> 
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
