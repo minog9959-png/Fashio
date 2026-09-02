@@ -77,51 +77,6 @@ const ScrollToHash = () => {
 
 function Home() {
 
-  // for Socket.io
-  //   useEffect(() => {
-  //   socket.on("connect", () => {
-  //     console.log("Connected to Socket.IO:", socket.id);
-  //   });
-
-  //   return () => {
-  //     socket.off("connect");
-  //   };
-  // }, []);
-
-  // const location = useLocation();
-
-  // useEffect(() => {
-  //   if (location.state?.success) {
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "Welcome Back!",
-  //       text: "You are an authorized user. Now you can shop anything from our store.",
-  //       confirmButtonText: "Start Shopping",
-  //       confirmButtonColor: "#D89D32", // Orange
-  //     });
-  //   }
-  // }, [location]);
-
-  //   const location = useLocation();
-  //   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   if (location.state?.success && token) {
-  //     Swal.fire({
-  //       title: "Welcome Back!",
-  //       text: "You are an authorized user. Now you can shop anything from our store.",
-  //       icon: "warning",
-  //     });
-
-  //     navigate("/",
-  //        { replace: true,
-  //         state: {} 
-  //       });
-  //   }
-  // }, [location, navigate]);
-
   return (
     <>
       <Hero />
@@ -133,27 +88,12 @@ function Home() {
       {/* <LatestBlog /> */}
       <BenefitSection />
       <PartnerSection />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
 
 function App() {
-  // for Socket.io
-  // useEffect(() => {
-  //   socket.on("connect", () => {
-  //     console.log("Connected to Socket.IO:", socket.id);
-  //   });
-
-  //   socket.on("orderStatusUpdated", (data) => {
-  //     console.log("Order Status Updated:", data);
-  //   });
-
-  //   return () => {
-  //     socket.off("connect");
-  //     socket.off("orderStatusUpdated");
-  //   };
-  // }, []);
 
   //updated
   useEffect(() => {
