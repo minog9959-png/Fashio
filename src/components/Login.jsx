@@ -97,9 +97,10 @@ const Login = () => {
 
     console.log("Firebase Login Response:", response.data);
 
-    // 5. Save your existing JWT
+    // 5. Save your existing JWT / user authentication data
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("userId", response.data.userId);
+    localStorage.setItem("userName", response.data.user.name);
 
     // 6. Navigate
     if (location.state?.from === "/cart") {

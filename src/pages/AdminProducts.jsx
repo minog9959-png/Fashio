@@ -13,6 +13,7 @@ const AdminProducts = () => {
         price: "",
         image: "",
         category: "",
+        subcategory: ""
     });
 
     const [categories, setCategories] = useState([]);
@@ -107,7 +108,8 @@ const AdminProducts = () => {
             !formData.description ||
             !formData.price ||
             !formData.image ||
-            !formData.category
+            !formData.category || 
+            !formData.subcategory
         ) {
             Swal.fire({
                 title: "Missing Information",
@@ -170,6 +172,7 @@ const AdminProducts = () => {
                 price: "",
                 image: "",
                 category: "",
+                subcategory: ""
             });
 
             setEditingProduct(null);
@@ -197,6 +200,7 @@ const AdminProducts = () => {
             price: product.price,
             image: product.image,
             category: product.category?._id || product.category,
+            subcategory: product.subcategory || "",
         });
 
         setShowForm(true);
@@ -334,6 +338,30 @@ const AdminProducts = () => {
                             </select>
                         </div>
 
+
+                        <div>
+    <label className="mb-2 block text-sm font-medium">
+        Subcategory
+    </label>
+
+    <select
+        value={formData.subcategory}
+        onChange={(e) =>
+            setFormData({
+                ...formData,
+                subcategory: e.target.value,
+            })
+        }
+        className="w-full rounded-lg border p-3 outline-none"
+    >
+        <option value="">Select Subcategory</option>
+        <option value="Clothing">Clothing</option>
+        <option value="HandBag">HandBag</option>
+        <option value="Shoes">Shoes</option>
+        <option value="Accessories">Accessories</option>
+    </select>
+</div>
+
                     </div>
 
                     <div className="mt-6 flex gap-3">
@@ -357,6 +385,7 @@ const AdminProducts = () => {
                                     price: "",
                                     image: "",
                                     category: "",
+                                    subcategory: ""
                                 });
                             }}
                             className="rounded-lg border px-5 py-2.5 text-gray-700"

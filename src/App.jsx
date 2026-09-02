@@ -2,12 +2,12 @@ import { Routes, Route } from "react-router-dom";
 
 import BenefitSection from "./components/BenefitSection";
 import Categories from "./components/Categories";
-import DealWeek from "./components/DealWeek";
+// import DealWeek from "./components/DealWeek";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import InstagramSection from "./components/InstagramSection";
-import LatestBlog from "./components/LatestBlog";
+// import LatestBlog from "./components/LatestBlog";
 import MenCollection from "./components/MenCollection";
 import Navbar from "./components/Navbar";
 import PartnerSection from "./components/PartnerSection";
@@ -47,6 +47,33 @@ import {
 } from "./firebaseMessaging";
 import AdminNewsletter from "./pages/AdminNewsletter";
 import Profile from "./pages/Profile";
+
+//import women collection 
+// import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+// redirect to smooth on women collection section
+const ScrollToHash = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(
+        location.hash.replace("#", "")
+      );
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({
+            behavior: "smooth",
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
+
+  return null;
+};
 
 function Home() {
 
@@ -100,10 +127,10 @@ function Home() {
       <Hero />
       <Categories />
       <WomenCollection />
-      <DealWeek />
+      {/* <DealWeek /> */}
       <MenCollection />
       <InstagramSection />
-      <LatestBlog />
+      {/* <LatestBlog /> */}
       <BenefitSection />
       <PartnerSection />
       <Footer />
@@ -147,22 +174,25 @@ function App() {
 
     return () => {
       socket.off("connect");
-       socket.off("newOrder");
+      socket.off("newOrder");
     };
   }, []);
 
 
   // permission request in App
   useEffect(() => {
-  requestNotificationPermission();
-}, []);
+    requestNotificationPermission();
+  }, []);
 
-useEffect(() => {
-  listenForMessages();
-}, []);
+  useEffect(() => {
+    listenForMessages();
+  }, []);
 
   return (
     <>
+
+    <ScrollToHash />
+
       <Routes>
 
         <Route element={<Layout />} >
@@ -203,8 +233,8 @@ useEffect(() => {
             </ProtectedRoute>}
           />
 
-        {/* Contact */}
-        <Route path="/contact" element={<Contact />} />
+          {/* Contact */}
+          <Route path="/contact" element={<Contact />} />
 
         </Route>
 
@@ -229,28 +259,50 @@ useEffect(() => {
             </AdminProtectedRoute>
           }
         >
-          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="dashboard" element={
+            <AdminProtectedRoute>
+              <AdminDashboard />
+            </AdminProtectedRoute>
+          } />
         </Route>
 
-      {/* Registered Users in a dashboard */}
-        <Route path="admin/users" element={<AdminUsers />} />
+        {/* Registered Users in a dashboard */}
+        <Route path="admin/users" element={
+          <AdminProtectedRoute>
+            <AdminUsers />
+          </AdminProtectedRoute>} />
 
-      {/* Admin Products in a dashboard */}
-        <Route path="admin/products" element={<AdminProducts />} />
+        {/* Admin Products in a dashboard */}
+        <Route path="admin/products" element={
+          <AdminProtectedRoute>
+            <AdminProducts />
+          </AdminProtectedRoute>
+        } />
 
-      {/* Admin categories in a dashboard */}
-        <Route path="admin/categories" element={<AdminCategories />} />
+        {/* Admin categories in a dashboard */}
+        <Route path="admin/categories" element={
+          <AdminProtectedRoute>
+            <AdminCategories />
+          </AdminProtectedRoute>
+        } />
 
-      {/* Admin order in a dashboard */}
-        <Route path="admin/orders" element={<AdminOrders />} />
+        {/* Admin order in a dashboard */}
+        <Route path="admin/orders" element={
+          <AdminProtectedRoute>
+            <AdminOrders />
+          </AdminProtectedRoute>} />
 
-      {/* Admin order in a dashboard */}
-        <Route path="admin/newsletter" element={<AdminNewsletter/>} />
+        {/* Admin order in a dashboard */}
+        <Route path="admin/newsletter" element={
+          <AdminProtectedRoute>
+            <AdminNewsletter />
+          </AdminProtectedRoute>
+        } />
 
-      {/* user Profile */}
+        {/* user Profile */}
         <Route path="/profile" element={
           <ProtectedRoute>
-          <Profile/>
+            <Profile />
           </ProtectedRoute>
         } />
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaBars, FaChevronDown, FaTimes } from "react-icons/fa";
+import { FaBars, FaChevronDown } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
@@ -11,17 +11,7 @@ const Navbar = () => {
 
     {/* Top Row */}
 
-    <div className="flex items-center justify-between">
-
-      {/* All Departments */}
-
-      <button
-  className="bg-[#3B3B3B] text-white h-14 px-5 flex items-center gap-3 text-sm font-semibold uppercase"
->
-  <FaBars />
-  <span>All Departments</span>
-  <FaChevronDown className="text-xs" />
-</button>
+    <div className="flex items-center justify-center">
 
       {/* Desktop Menu */}
 
@@ -64,25 +54,18 @@ const Navbar = () => {
 </li>
 
         <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-          COLLECTION
-        </li>
-
-        <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
           MEN'S
         </li>
 
+        <Link to="/#women-collection">
         <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
           WOMEN'S
         </li>
+        </Link>
 
-        <li className="px-7 h-14 flex items-center gap-2 hover:bg-[#E7AB3C] duration-300">
-          PAGES
-          <FaChevronDown className="text-[10px]" />
-        </li>
-
-        <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+        {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
           BLOG
-        </li>
+        </li> */}
 
         <Link to="/contact">
 

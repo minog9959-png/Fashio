@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import banner from "../assets/images/women-large.jpg";
-import women1 from "../assets/images/women-1.jpg";
-import women2 from "../assets/images/women-2.jpg";
-import women3 from "../assets/images/women-3.jpg";
-import women4 from "../assets/images/women-4.jpg";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
@@ -14,7 +12,6 @@ import "swiper/css/pagination";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {
     FaHeart,
-    FaShoppingBag
 } from "react-icons/fa";
 
 const tabs = [
@@ -24,44 +21,45 @@ const tabs = [
     "Accessories",
 ];
 
-const products = [
-    {
-        id: 1,
-        image: women1,
-        category: "Coat",
-        name: "Pure Pineapple",
-        price: "$14.00",
-        sale: true,
-    },
-    {
-        id: 2,
-        image: women2,
-        category: "Shoes",
-        name: "Guangzhou Sweater",
-        price: "$13.00",
-    },
-    {
-        id: 3,
-        image: women3,
-        category: "Towel",
-        name: "Multi Pocket Bag",
-        price: "$34.00",
-    },
-    {
-        id: 4,
-        image: women4,
-        category: "Bag",
-        name: "Leather Bag",
-        price: "$25.00",
-    },
-];
-
 const WomenCollection = () => {
 
     const [activeTab, setActiveTab] = useState("Clothing");
 
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const womenCategoryId = "6a5ca65a46342e5a302e2d2d";
+
+    const fetchWomenProducts = async () => {
+        try {
+            setLoading(true);
+
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/products/filter`,
+                {
+                    params: {
+                        category: womenCategoryId,
+                        subcategory: activeTab,
+                    },
+                }
+            );
+
+            console.log("Women Products:", response.data.products);
+
+            setProducts(response.data.products);
+
+        } catch (error) {
+            console.log("Women products error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchWomenProducts();
+    }, [activeTab]);
+
     return (
-        <section className="py-20">
+        <section className="py-20" id="women-collection">
 
             <div className="max-w-[1200px] mx-auto px-4">
 
@@ -111,8 +109,8 @@ const WomenCollection = () => {
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
                                         className={`pb-2 border-b-2 duration-300 ${activeTab === tab
-                                                ? "border-[#E7AB3C] text-[#E7AB3C]"
-                                                : "border-transparent hover:text-[#E7AB3C]"
+                                            ? "border-[#E7AB3C] text-[#E7AB3C]"
+                                            : "border-transparent hover:text-[#E7AB3C]"
                                             }`}
                                     >
                                         {tab}
@@ -162,7 +160,7 @@ const WomenCollection = () => {
                             >
 
                                 {products.map((product) => (
-                                    <SwiperSlide key={product.id}>
+                                    <SwiperSlide key={product._id}>
                                         <div className="group bg-white rounded-lg">
 
                                             {/* Image */}
@@ -189,7 +187,7 @@ pointer-events-none"
 
                                                 <img
                                                     src={product.image}
-                                                    alt={product.name}
+                                                    alt={product.title}
                                                     className="w-full h-[330px] object-cover transition duration-500 group-hover:scale-105"
                                                 />
 
@@ -207,10 +205,7 @@ pointer-events-none"
                                                 {/* Bottom Bar */}
 
                                                 <div
-                                                    className="absolute bottom-0 left-0
-w-full
-h-14
-z-20
+                                                    className="absolute bottom-0 left-0 w-full h-14 z-20
 translate-y-[100%]
 group-hover:translate-y-0
 transition-transform
@@ -218,24 +213,18 @@ duration-300
 flex"
                                                 >
 
-                                                    {/* Shopping Bag */}
-
-                                                    <button
-                                                        className="w-14 bg-[#E7AB3C] text-white
-        flex justify-center items-center py-4"
-                                                    >
-                                                        <FaShoppingBag />
-                                                    </button>
-
                                                     {/* Quick View */}
 
-                                                    <button
-                                                        className="flex-1 bg-white 
-        font-semibold hover:bg-[#252525]
-        hover:text-white duration-300"
+                                                    <Link
+                                                        to={`/product/${product._id}`}
+                                                        className="flex-1 bg-white font-semibold
+    flex items-center justify-center
+    hover:bg-[#252525]
+    hover:text-white
+    duration-300"
                                                     >
                                                         + Quick View
-                                                    </button>
+                                                    </Link>
 
                                                 </div>
 
@@ -245,16 +234,20 @@ flex"
 
                                             <div className="text-center my-5">
 
+                                                {/* <p className="text-xs uppercase tracking-[3px] text-gray-400">
+                                                    {product.category?.name}
+                                                </p> */}
+
                                                 <p className="text-xs uppercase tracking-[3px] text-gray-400">
-                                                    {product.category}
+                                                    {product.subcategory}
                                                 </p>
 
                                                 <h3 className="mt-2 text-xl font-medium hover:text-[#E7AB3C] duration-300">
-                                                    {product.name}
+                                                    {product.title}
                                                 </h3>
 
                                                 <p className="mt-2 text-3xl font-bold text-[#E7AB3C]">
-                                                    {product.price}
+                                                    ${product.price}
                                                 </p>
 
                                             </div>

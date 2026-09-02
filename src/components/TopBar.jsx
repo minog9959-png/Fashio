@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   FaEnvelope,
   FaFacebookF,
@@ -7,18 +8,31 @@ import {
   FaUser,
   FaPhoneAlt,
 } from "react-icons/fa";
+
 import { Link, useNavigate } from "react-router-dom";
 
 const TopBar = () => {
+
   const navigate = useNavigate();
+
   const token = localStorage.getItem("token");
+
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+  const name = localStorage.getItem("userName");
+  setUserName(name || "");
+}, []);
+
   const handleLogout = () => {
     // console.log("Logout clicked");
-     localStorage.removeItem("token");
-     localStorage.removeItem("userId");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
     navigate("/");
     window.location.reload();
   };
+
   return (
     <div className="border-b border-gray-200 bg-white">
       <div className="max-w-7xl mx-auto px-5">
@@ -50,12 +64,11 @@ const TopBar = () => {
               <FaPinterestP className="cursor-pointer text-gray-900 hover:text-pink-500 duration-300 text-sm" />
             </div>
 
-            {/* Language */}
+            {/* User Name */}
             <div className="px-6 py-4 border-r border-gray-200">
-              <select className="text-sm text-gray-900 outline-none bg-transparent cursor-pointer">
-                <option>English</option>
-                <option>Urdu</option>
-              </select>
+              <span className="text-sm text-gray-900 font-semibold">
+                {userName || "Welcome"}
+              </span>
             </div>
 
             {/* Login */}
