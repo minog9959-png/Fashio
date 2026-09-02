@@ -58,6 +58,40 @@ const WomenCollection = () => {
         fetchWomenProducts();
     }, [activeTab]);
 
+    const handleWomenAddToWishlist = async (product) => {
+    try {
+        if (!product) return;
+
+        const userId = localStorage.getItem("userId");
+
+        if (!userId) {
+            alert("Please login first");
+            navigate("/login");
+            return;
+        }
+
+        const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/wishlist`,
+            {
+                user: userId,
+                product: product._id,
+            }
+        );
+
+        alert(response.data.message);
+
+        window.dispatchEvent(new Event("wishlistUpdated"));
+
+    } catch (error) {
+        console.log(error);
+
+        alert(
+            error.response?.data?.message ||
+            "Failed to add to wishlist"
+        );
+    }
+};
+
     return (
         <section className="py-20" id="women-collection">
 
@@ -192,7 +226,7 @@ pointer-events-none"
                                                 />
 
                                                 {/* Heart */}
-                                                <button
+                                                <button onClick={()=>handleWomenAddToWishlist(product)}
                                                     className="absolute top-4 right-4 z-30
       w-10 h-10 rounded-full bg-white shadow
       flex items-center justify-center

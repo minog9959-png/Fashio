@@ -17,6 +17,7 @@ import payment from "../assets/images/payment-method.png";
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
 
@@ -125,42 +126,28 @@ const Footer = () => {
                     </div>
 
                     {/* Column 2 */}
-                    <div className="lg:col-span-2">
+                    <div className="lg:col-span-3">
 
                         <h3 className="text-xl font-semibold mb-6">
                             Information
                         </h3>
 
                         <ul className="space-y-4 text-gray-400">
-
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">About Us</li>
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">Checkout</li>
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">Contact</li>
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">Services</li>
-
-                        </ul>
-
-                    </div>
-
-                    {/* Column 3 */}
-                    <div className="lg:col-span-2">
-
-                        <h3 className="text-xl font-semibold mb-6">
-                            My Account
-                        </h3>
-
-                        <ul className="space-y-4 text-gray-400">
-
                             <li className="hover:text-[#E7AB3C] cursor-pointer">My Account</li>
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">Contact</li>
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">Shopping Cart</li>
+
+                            <Link to="/contact">
+                            <li className="hover:text-[#E7AB3C] cursor-pointer mb-4">Contact</li>
+                            </Link>
+
+                            <Link to="/shop">
                             <li className="hover:text-[#E7AB3C] cursor-pointer">Shop</li>
+                            </Link>
 
                         </ul>
 
                     </div>
 
-                    {/* Column 4 */}
+                    {/* Column 3*/}
                     <div className="lg:col-span-4">
 
                         <h3 className="text-xl font-bold leading-tight mb-6">
@@ -197,17 +184,17 @@ const Footer = () => {
 
                 <div className="border-t border-gray-700 mt-16 py-6">
 
-                    <div className="max-w-[1320px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-5">
+                    <div className="max-w-[1320px] mx-auto px-6 flex flex-col md:flex-row justify-center items-center gap-5">
 
                         <p className="text-gray-400 text-sm text-center md:text-left">
                             Copyright ©2026 All rights reserved
                         </p>
 
-                        <img
+                        {/* <img
                             src={payment}
                             alt="Payment"
                             className="h-7 object-contain"
-                        />
+                        /> */}
 
                     </div>
 
