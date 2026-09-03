@@ -111,15 +111,15 @@ const AdminUsers = () => {
                 ) : (
                     <div className="overflow-x-auto">
 
-                        <table className="w-full text-left">
+                        <table className="w-full min-w-[750px] text-left">
 
                             <thead>
                                 <tr className="border-b text-sm text-gray-500">
-                                    <th className="pb-3">Name</th>
-                                    <th className="pb-3">Email</th>
-                                    <th className="pb-3">Verified</th>
-                                    <th className="pb-3">Joined</th>
-                                    <th className="pb-3">Action</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Name</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Email</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Verified</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Joined</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Action</th>
                                 </tr>
                             </thead>
 
@@ -129,15 +129,16 @@ const AdminUsers = () => {
                                         key={user._id}
                                         className="border-b"
                                     >
-                                        <td className="py-4 font-medium text-gray-800">
+
+                                        <td className="px-4 py-4 font-medium text-gray-800 whitespace-nowrap">
                                             {user.name}
                                         </td>
 
-                                        <td className="py-4 text-gray-600">
+                                        <td className="px-4 py-4 text-gray-600 whitespace-nowrap">
                                             {user.email}
                                         </td>
 
-                                        <td className="py-4">
+                                        <td className="px-4 py-4 whitespace-nowrap">
                                             {user.isVerified ? (
                                                 <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
                                                     Verified
@@ -149,13 +150,13 @@ const AdminUsers = () => {
                                             )}
                                         </td>
 
-                                        <td className="py-4 text-gray-600">
+                                        <td className="px-4 py-4 text-gray-600 whitespace-nowrap">
                                             {user.createdAt
                                                 ? new Date(user.createdAt).toLocaleDateString()
                                                 : "N/A"}
                                         </td>
 
-                                        <td className="py-4">
+                                        <td className="px-4 py-4 whitespace-nowrap">
                                             <button
                                                 onClick={() => handleDeleteUser(user._id)}
                                                 className="rounded bg-red-100 px-3 py-1 text-sm text-red-600 hover:bg-red-200"

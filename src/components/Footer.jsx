@@ -133,7 +133,9 @@ const Footer = () => {
                         </h3>
 
                         <ul className="space-y-4 text-gray-400">
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">My Account</li>
+                            <Link to="/#benefits">
+                            <li className="hover:text-[#E7AB3C] cursor-pointer mb-4">Benefits</li>
+                            </Link>
 
                             <Link to="/contact">
                             <li className="hover:text-[#E7AB3C] cursor-pointer mb-4">Contact</li>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import banner from "../assets/images/women-large.jpg";
 
@@ -27,7 +27,13 @@ const WomenCollection = () => {
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    //wishlist hook state
+    const [wishlistItems, setWishlistItems] = useState([]);
+
     const womenCategoryId = "6a5ca65a46342e5a302e2d2d";
+
+    const navigate = useNavigate();
 
     const fetchWomenProducts = async () => {
         try {
@@ -58,39 +64,121 @@ const WomenCollection = () => {
         fetchWomenProducts();
     }, [activeTab]);
 
-    const handleWomenAddToWishlist = async (product) => {
-    try {
-        if (!product) return;
 
-        const userId = localStorage.getItem("userId");
+    // fetch wishlist (show parmanent wishlist)
 
-        if (!userId) {
-            alert("Please login first");
-            navigate("/login");
-            return;
-        }
+    const fetchWishlist = async () => {
+        try {
+            const userId = localStorage.getItem("userId");
 
-        const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/wishlist`,
-            {
-                user: userId,
-                product: product._id,
+            if (!userId) {
+                setWishlistItems([]);
+                return;
             }
-        );
 
-        alert(response.data.message);
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/wishlist/${userId}`
+            );
 
-        window.dispatchEvent(new Event("wishlistUpdated"));
+            setWishlistItems(response.data.wishlistItems || []);
 
-    } catch (error) {
-        console.log(error);
+        } catch (error) {
+            console.log("Wishlist fetch error:", error);
+            setWishlistItems([]);
+        }
+    };
 
-        alert(
-            error.response?.data?.message ||
-            "Failed to add to wishlist"
-        );
-    }
-};
+    // fetch wishlist (show parmanent wishlist) - show wishlist when loads this page one time 
+    useEffect(() => {
+        fetchWishlist();
+    }, []);
+
+    // const handleWomenAddToWishlist = async (product) => {
+    //     try {
+    //         if (!product) return;
+
+    //         const userId = localStorage.getItem("userId");
+
+    //         if (!userId) {
+    //             alert("Please login first");
+    //             navigate("/login");
+    //             return;
+    //         }
+
+    //         const response = await axios.post(
+    //             `${import.meta.env.VITE_API_URL}/wishlist`,
+    //             {
+    //                 user: userId,
+    //                 product: product._id,
+    //             }
+    //         );
+
+    //         alert(response.data.message);
+
+    //         window.dispatchEvent(new Event("wishlistUpdated"));
+
+    //     } catch (error) {
+    //         console.log(error);
+
+    //         alert(
+    //             error.response?.data?.message ||
+    //             "Failed to add to wishlist"
+    //         );
+    //     }
+    // };
+
+    const handleWomenAddToWishlist = async (product) => {
+        try {
+            const userId = localStorage.getItem("userId");
+
+            if (!userId) {
+                alert("Please login first");
+                navigate("/login");
+                return;
+            }
+
+            const existingItem = wishlistItems.find(
+                (item) => item?.product?._id === product._id
+            );
+
+            // REMOVE FROM WISHLIST
+            if (existingItem) {
+                await axios.delete(
+                    `${import.meta.env.VITE_API_URL}/wishlist/${existingItem._id}`
+                );
+
+                setWishlistItems((prev) =>
+                    prev.filter((item) => item?._id !== existingItem._id)
+                );
+
+                window.dispatchEvent(new Event("wishlistUpdated"));
+
+                return;
+            }
+
+            // ADD TO WISHLIST
+            await axios.post(
+                `${import.meta.env.VITE_API_URL}/wishlist`,
+                {
+                    user: userId,
+                    product: product._id,
+                }
+            );
+
+            // Dobara GET karo taake product populated ho
+            await fetchWishlist();
+
+            window.dispatchEvent(new Event("wishlistUpdated"));
+
+        } catch (error) {
+            console.log("Wishlist error:", error);
+
+            alert(
+                error.response?.data?.message ||
+                "Failed to update wishlist"
+            );
+        }
+    };
 
     return (
         <section className="py-20" id="women-collection">
@@ -222,26 +310,35 @@ pointer-events-none"
                                                 <img
                                                     src={product.image}
                                                     alt={product.title}
-                                                    className="w-full h-[330px] object-cover transition duration-500 group-hover:scale-105"
+                                                    className="w-full h-[330px] object-cover transition duration-500 md:group-hover:scale-105"
                                                 />
 
                                                 {/* Heart */}
-                                                <button onClick={()=>handleWomenAddToWishlist(product)}
-                                                    className="absolute top-4 right-4 z-30
-      w-10 h-10 rounded-full bg-white shadow
-      flex items-center justify-center
-      opacity-0 group-hover:opacity-100
-      duration-300 hover:text-[#E7AB3C]"
+
+                                                <button
+                                                    onClick={() => handleWomenWishlist(product)}
+                                                    className={`absolute top-4 right-4 z-30
+    w-10 h-10 rounded-full bg-white shadow
+    flex items-center justify-center
+    transition-opacity duration-300
+    ${wishlistItems.some(
+                                                        (item) => item?.product?._id === product._id
+                                                    )
+                                                            ? "opacity-100 text-pink-500"
+                                                            : "opacity-100 lg:opacity-0 lg:group-hover:opacity-100 hover:text-[#E7AB3C]"
+                                                        }`}
                                                 >
                                                     <FaHeart />
                                                 </button>
+                                                
 
                                                 {/* Bottom Bar */}
 
                                                 <div
                                                     className="absolute bottom-0 left-0 w-full h-14 z-20
-translate-y-[100%]
-group-hover:translate-y-0
+translate-y-0
+md:translate-y-[100%]
+md:group-hover:translate-y-0
 transition-transform
 duration-300
 flex"

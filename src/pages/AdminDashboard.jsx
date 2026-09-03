@@ -50,15 +50,15 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 w-full">
+    <div className="bg-gray-100 p-4 sm:p-6 w-full">
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl sm:text-2xl font-bold text-gray-800">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
           Admin Dashboard
         </h1>
 
-        <p className="mt-1 sm:text-2xl text-gray-500">
+        <p className="mt-1 text-sm sm:text-base text-gray-500">
           Welcome back, Admin! Here's what's happening with your store.
         </p>
       </div>

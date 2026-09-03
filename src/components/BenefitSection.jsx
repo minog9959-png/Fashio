@@ -24,7 +24,7 @@ const benefits = [
 
 const BenefitSection = () => {
     return (
-        <section>
+        <section id="benefits">
 
             <div className="max-w-[1200px] mx-auto px-4">
 

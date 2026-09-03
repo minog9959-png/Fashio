@@ -10,30 +10,32 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import hero1 from "../assets/images/hero-1.jpg";
 import hero2 from "../assets/images/hero-2.jpg";
 
+import { Link } from "react-router-dom";
+
 const slides = [
   {
     id: 1,
-    image: hero1,
-    category: "Bag, Kids",
+    image: hero2,
+    category: "Men Collection",
     title: "Black Friday",
     description:
-    <>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed 
-    <br/>
-    do eiusmod tempor incididunt ut labore et dolore.
-    </>
+      <>
+        Premiere Men Collection in my store, Latest Variety and
+        <br />
+        different kind of gents products in my store Fashio.
+      </>
   },
   {
     id: 2,
-    image: hero2,
+    image: hero1,
     category: "Women Collection",
     title: "Summer Fashion",
     description:
-       <>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed 
-    <br/>
-    do eiusmod tempor incididunt ut labore et dolore.
-    </>
+      <>
+        Premiere Women Collection in my store, Latest Variety and
+        <br />
+        different kind of ladies products in my store Fashio.
+      </>
   },
 ];
 
@@ -69,17 +71,16 @@ const Hero = () => {
                   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] leading-tight lg:leading-none font-bold mt-4 sm:mt-5">
                     {item.title}
                   </h1>
-                  <p className="text-gray-600 text-sm mt-5 sm:mt-7">
+                  <p className="mt-5 max-w-[390px] text-sm leading-7 text-gray-600 sm:mt-7">
                     {item.description}
                   </p>
-                  <button
-                    className="mt-8 sm:mt-9 bg-[#E7AB3C] text-white
-  px-6 sm:px-8 py-3 sm:py-4
-  uppercase text-xs sm:text-sm font-semibold
-  hover:bg-[#d89d32] duration-300"
+
+                  <Link
+                    to="/shop"
+                    className="mt-8 sm:mt-9 inline-block bg-[#E7AB3C] px-6 py-3 text-xs font-semibold uppercase text-white duration-300 hover:bg-[#d89d32] sm:px-8 sm:py-4 sm:text-sm"
                   >
                     SHOP NOW
-                  </button>
+                  </Link>
 
                 </div>
               </div>

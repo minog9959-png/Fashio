@@ -40,30 +40,30 @@ const AdminTopbar = () => {
   // }, []);
 
   useEffect(() => {
-  if (!socket) return;
+    if (!socket) return;
 
-  const handleNewOrder = (data) => {
-    console.log("Admin received new order:", data);
+    const handleNewOrder = (data) => {
+      console.log("Admin received new order:", data);
 
-    setNotifications((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        message: data.message,
-        orderId: data.orderId,
-      },
-    ]);
-  };
+      setNotifications((prev) => [
+        ...prev,
+        {
+          id: Date.now(),
+          message: data.message,
+          orderId: data.orderId,
+        },
+      ]);
+    };
 
-  socket.on("newOrder", handleNewOrder);
+    socket.on("newOrder", handleNewOrder);
 
-  return () => {
-    socket.off("newOrder", handleNewOrder);
-  };
-}, []);
+    return () => {
+      socket.off("newOrder", handleNewOrder);
+    };
+  }, []);
 
   return (
-    <header className="h-20 bg-white shadow-sm flex items-center justify-between px-8">
+    <header className="flex h-20 w-full items-center justify-between bg-white px-4 shadow-sm sm:px-6 md:px-8">
 
       {/* Page Title */}
       <div>
@@ -76,74 +76,74 @@ const AdminTopbar = () => {
         </p>
       </div>
 
-      {/* Notifications */}
-      <div className="relative ml-82">
+      {/* Right Side */}
 
-        <button
-          onClick={() =>
-            setShowNotifications(!showNotifications)
-          }
-          className="relative"
-        >
-          <FaBell className="text-xl text-gray-600 hover:text-orange-500 duration-300" />
+      <div className="flex shrink-0 items-center gap-4 sm:gap-6 md:gap-8">
 
-          {notifications.length > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
-              {notifications.length}
-            </span>
-          )}
-        </button>
+        {/* Notifications */}
+        <div className="relative">
 
-        {/* Notification Dropdown */}
-        {showNotifications && (
-          <div className="absolute right-0 top-8 w-80 bg-white border border-gray-200 shadow-lg rounded-lg z-50">
+          <button
+            onClick={() => setShowNotifications(!showNotifications)}
+            className="relative flex h-10 w-10 items-center justify-center"
+          >
+            <FaBell className="text-xl text-gray-600 hover:text-orange-500 duration-300" />
 
-            <div className="px-4 py-3 border-b font-semibold text-gray-700">
-              Notifications
-            </div>
-
-            {notifications.length === 0 ? (
-              <p className="px-4 py-5 text-sm text-gray-500">
-                No notifications
-              </p>
-            ) : (
-              <div className="max-h-72 overflow-y-auto">
-
-                {notifications.map((notification) => (
-                  <div
-                    key={notification.id}
-                    className="px-4 py-3 border-b hover:bg-gray-50"
-                  >
-                    <div className="flex gap-3">
-
-                      <FaShoppingBag className="text-orange-500 mt-1" />
-
-                      <div>
-                        <p className="text-sm font-medium text-gray-700">
-                          {notification.message}
-                        </p>
-
-                        <p className="text-xs text-gray-400 mt-1">
-                          New order received
-                        </p>
-                      </div>
-
-                    </div>
-                  </div>
-                ))}
-
-              </div>
+            {notifications.length > 0 && (
+              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+                {notifications.length}
+              </span>
             )}
+          </button>
 
-          </div>
-        )}
+          {/* Notification Dropdown */}
+          {showNotifications && (
+            <div className="absolute right-0 top-8 z-50 w-80 rounded-lg border border-gray-200 bg-white shadow-lg">
 
-      </div>
+              <div className="border-b px-4 py-3 font-semibold text-gray-700">
+                Notifications
+              </div>
 
-      {/* Admin Info */}
-      <div className="flex items-center gap-8">
+              {notifications.length === 0 ? (
+                <p className="px-4 py-5 text-sm text-gray-500">
+                  No notifications
+                </p>
+              ) : (
+                <div className="max-h-72 overflow-y-auto">
 
-        <div className="text-right">
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className="border-b px-4 py-3 hover:bg-gray-50"
+                    >
+                      <div className="flex gap-3">
+
+                        <FaShoppingBag className="mt-1 text-orange-500" />
+
+                        <div>
+                          <p className="text-sm font-medium text-gray-700">
+                            {notification.message}
+                          </p>
+
+                          <p className="mt-1 text-xs text-gray-400">
+                            New order received
+                          </p>
+                        </div>
+
+                      </div>
+                    </div>
+                  ))}
+
+                </div>
+              )}
+
+            </div>
+          )}
+
+        </div>
+
+        {/* Admin Info */}
+        <div className="hidden text-right md:block">
           <p className="font-semibold text-gray-700">
             {admin?.user || "Admin"}
           </p>
@@ -155,7 +155,7 @@ const AdminTopbar = () => {
 
         <button
           onClick={handleLogout}
-          className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 duration-300"
+          className="rounded-lg bg-orange-500 px-5 py-2 text-white duration-300 hover:bg-orange-600"
         >
           Logout
         </button>

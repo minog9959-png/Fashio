@@ -13,11 +13,11 @@ const categories = [
     title: "Women's",
     image: women,
   },
-  {
-    id: 3,
-    title: "Kid's",
-    image: kids,
-  },
+  // {
+  //   id: 3,
+  //   title: "Kid's",
+  //   image: kids,
+  // },
 ];
 
 const Categories = () => {
@@ -25,7 +25,7 @@ const Categories = () => {
     <section className="py-20">
       <div className="max-w-[1200px] mx-auto px-4">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
 
           {categories.map((item) => (
             <div

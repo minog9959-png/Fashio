@@ -119,7 +119,7 @@ const AdminOrders = () => {
                 </p>
             </div>
 
-            <div className="rounded-lg bg-white p-6 shadow-sm">
+            <div className="rounded-lg bg-white p-3 sm:p-6 shadow-sm">
 
                 {loading ? (
                     <p className="text-gray-500">
@@ -130,23 +130,23 @@ const AdminOrders = () => {
                         No orders found.
                     </p>
                 ) : (
+
                     <div className="overflow-x-auto">
 
-                        <table className="w-full text-left">
+                        <table className="w-full min-w-[1100px] text-left">
 
                             <thead>
                                 <tr className="border-b text-sm text-gray-500">
-                                    <th className="pb-3">Order</th>
-                                    <th className="pb-3">Customer</th>
-                                    <th className="pb-3">Products</th>
-                                    <th className="pb-3">Total</th>
-                                    <th className="pb-3">Payment</th>
-                                    <th className="pb-3">Status</th>
-                                    <th className="pb-3">Date</th>
-                                    <th className="pb-3">Action</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Order</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Customer</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Products</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Total</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Payment</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Status</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Date</th>
+                                    <th className="px-4 py-3 whitespace-nowrap">Action</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 {orders.map((order) => (
                                     <tr
@@ -154,11 +154,11 @@ const AdminOrders = () => {
                                         className="border-b"
                                     >
 
-                                        <td className="py-4 text-sm text-gray-600">
+                                        <td className="py-4 px-4 text-sm text-gray-600">
                                             #{order._id.slice(-6)}
                                         </td>
 
-                                        <td className="py-4">
+                                        <td className="py-4 px-4">
                                             <div>
                                                 <p className="font-medium text-gray-800">
                                                     {order.user?.name || "N/A"}
@@ -170,15 +170,15 @@ const AdminOrders = () => {
                                             </div>
                                         </td>
 
-                                        <td className="py-4 text-gray-600">
+                                        <td className="py-4 px-4 text-gray-600">
                                             {order.items?.length || 0} item(s)
                                         </td>
 
-                                        <td className="py-4 font-medium text-gray-800">
+                                        <td className="py-4 px-4 font-medium text-gray-800">
                                             ${order.totalPrice}
                                         </td>
 
-                                        <td className="py-4">
+                                        <td className="py-4 px-4">
                                             {order.paymentStatus}
                                         </td>
 
@@ -186,7 +186,7 @@ const AdminOrders = () => {
                                                {order.status}
                                                     </td> */}
 
-                                        <td className="py-4">
+                                        <td className="py-4 px-4">
                                             <select
                                                 value={order.status}
                                                 onChange={(e) =>
@@ -202,16 +202,16 @@ const AdminOrders = () => {
                                             </select>
                                         </td>
 
-                                        <td className="py-4 text-gray-600">
+                                        <td className="py-4 px-4 text-gray-600">
                                             {order.createdAt
                                                 ? new Date(order.createdAt).toLocaleDateString()
                                                 : "N/A"}
                                         </td>
 
-                                        <td className="py-4">
+                                        <td className="py-4 px-4">
                                             <button
                                                 onClick={() => handleViewDetails(order._id)}
-                                                className="rounded-lg bg-black px-4 py-2 text-sm text-white hover:bg-gray-800"
+                                                className="rounded-lg bg-black px-4 py-2 text-sm text-white whitespace-nowrap hover:bg-gray-800"
                                             >
                                                 View Details
                                             </button>
@@ -225,7 +225,7 @@ const AdminOrders = () => {
 
                     </div>
                 )}
-                            </div>
+            </div>
 
             {showDetails && selectedOrder && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">

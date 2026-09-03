@@ -94,7 +94,7 @@ const AdminSidebar = () => {
             }`
           }
         >
-          <span>👥</span>
+          <span>📧</span>
           <span>Newsletter</span>
         </NavLink>
 

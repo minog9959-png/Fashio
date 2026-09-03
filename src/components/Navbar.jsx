@@ -3,111 +3,151 @@ import { FaBars, FaChevronDown } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
-    return (
-        <nav className="bg-[#252525]">
+  const [menuOpen, setMenuOpen] = useState(false);
+  return (
+    <nav className="bg-[#252525]">
 
-  <div className="max-w-[1200px] mx-auto px-4">
+      <div className="max-w-[1200px] mx-auto px-4">
 
-    {/* Top Row */}
+        {/* Top Row */}
 
-    <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center">
 
-      {/* Desktop Menu */}
+          {/* Desktop Menu */}
 
-        <ul className="hidden md:flex items-center text-white">
-        {/* <li className="px-7 h-14 flex items-center">HOME</li> */}
-        <li className="h-14 flex items-center">
-  <NavLink
-    to="/"
-    className={({ isActive }) =>
-      `px-7 h-14 flex items-center duration-300 ${
-        isActive
-          ? "bg-[#E7AB3C] text-white"
-          : "hover:bg-[#E7AB3C]"
-      }`
-    }
-  >
-    HOME
-  </NavLink>
-</li>
+          <ul className="hidden md:flex items-center text-white">
+            {/* <li className="px-7 h-14 flex items-center">HOME</li> */}
+            <li className="h-14 flex items-center">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `px-7 h-14 flex items-center duration-300 ${isActive
+                    ? "bg-[#E7AB3C] text-white"
+                    : "hover:bg-[#E7AB3C]"
+                  }`
+                }
+              >
+                HOME
+              </NavLink>
+            </li>
 
-        {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+            {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
           <Link to="/shop">
           SHOP
           </Link>
         </li> */}
 
-<li className="h-14 flex items-center">
-  <NavLink
-    to="/shop"
-    className={({ isActive }) =>
-      `px-7 h-14 flex items-center duration-300 ${
-        isActive
-          ? "bg-[#E7AB3C] text-white"
-          : "hover:bg-[#E7AB3C]"
-      }`
-    }
-  >
-    SHOP
-  </NavLink>
-</li>
+            <li className="h-14 flex items-center">
+              <NavLink
+                to="/shop"
+                className={({ isActive }) =>
+                  `px-7 h-14 flex items-center duration-300 ${isActive
+                    ? "bg-[#E7AB3C] text-white"
+                    : "hover:bg-[#E7AB3C]"
+                  }`
+                }
+              >
+                SHOP
+              </NavLink>
+            </li>
 
-        <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-          MEN'S
-        </li>
+            <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+              MEN'S
+            </li>
 
-        <Link to="/#women-collection">
-        <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-          WOMEN'S
-        </li>
-        </Link>
+            <Link to="/#women-collection">
+              <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+                WOMEN'S
+              </li>
+            </Link>
 
-        {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+            {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
           BLOG
         </li> */}
 
-        <Link to="/contact">
+            <Link to="/contact">
 
-         <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-          CONTACT
-        </li>
-        
-        </Link>
+              <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+                CONTACT
+              </li>
 
-      </ul>
+            </Link>
 
-      {/* Mobile Menu Button */}
+          </ul>
 
-    <button
-  onClick={() => setMenuOpen(!menuOpen)}
-  className="md:hidden text-white text-2xl p-4"
->
-  <FaBars />
-</button>
+          {/* Mobile Menu Button */}
 
-    </div>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden text-white text-2xl p-4"
+          >
+            <FaBars />
+          </button>
 
-    {/* Mobile Menu */}
+        </div>
 
-    {menuOpen && (
-  <ul className="md:hidden bg-[#252525] text-white">
+        {/* Mobile Menu */}
 
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300">HOME</li>
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300">SHOP</li>
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300">COLLECTION</li>
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300">MEN'S</li>
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300">WOMEN'S</li>
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300">PAGES</li>
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300">BLOG</li>
-    <li className="p-4 border-t border-gray-600 hover:bg-[#E7AB3C] duration-300f">CONTACT</li>
+        {menuOpen && (
+          <ul className="md:hidden bg-[#252525] text-white">
 
-  </ul>
-)}
-  </div>
+            <li className="border-t border-gray-600">
+              <NavLink
+                to="/"
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block p-4 duration-300 ${isActive
+                    ? "bg-[#E7AB3C]"
+                    : "active:bg-[#E7AB3C]"
+                  }`
+                }
+              >
+                HOME
+              </NavLink>
+            </li>
 
-</nav>
-    );
+            <li className="border-t border-gray-600">
+              <NavLink
+                to="/shop"
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block p-4 duration-300 ${isActive
+                    ? "bg-[#E7AB3C]"
+                    : "active:bg-[#E7AB3C]"
+                  }`
+                }
+              >
+                SHOP
+              </NavLink>
+            </li>
+
+            <li className="border-t border-gray-600">
+              <Link
+                to="/#women-collection"
+                onClick={() => setMenuOpen(false)}
+                className="block p-4 active:bg-[#E7AB3C] duration-300"
+              >
+                WOMEN'S
+              </Link>
+            </li>
+
+            <li className="border-t border-gray-600">
+              <Link
+                to="/contact"
+                onClick={() => setMenuOpen(false)}
+                className="block p-4 active:bg-[#E7AB3C] duration-300"
+              >
+                CONTACT
+              </Link>
+            </li>
+
+          </ul>
+        )}
+
+      </div>
+
+    </nav>
+  );
 };
 
 export default Navbar;
