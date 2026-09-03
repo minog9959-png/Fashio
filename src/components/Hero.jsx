@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 import hero1 from "../assets/images/hero-1.jpg";
-import hero2 from "../assets/images/hero-2.jpg";
+import hero2 from "../assets/images/hero-man.png";
 
 import { Link } from "react-router-dom";
 

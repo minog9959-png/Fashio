@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import banner from "../assets/images/man-large.jpg";
@@ -12,7 +12,6 @@ import "swiper/css/pagination";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {
     FaHeart,
-    FaShoppingBag
 } from "react-icons/fa";
 
 const tabs = [
@@ -24,10 +23,14 @@ const tabs = [
 
 const MenCollection = () => {
 
+    const navigate = useNavigate();
+
     const [activeTab, setActiveTab] = useState("Clothing");
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [wishlistItems, setWishlistItems] = useState([]);
 
     const menCategoryId = "6a5d8c982c834e39d21b7798";
 
@@ -61,8 +64,85 @@ const MenCollection = () => {
         fetchMenProducts();
     }, [activeTab]);
 
+
+    const fetchMenWishlist = async () => {
+        try {
+            const userId = localStorage.getItem("userId");
+
+            if (!userId) {
+                setWishlistItems([]);
+                return;
+            }
+
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/wishlist/${userId}`
+            );
+
+            setWishlistItems(response.data.wishlistItems || []);
+
+        } catch (error) {
+            console.log("Wishlist fetch error:", error);
+        }
+    };
+
+    // useEffect
+    useEffect(() => {
+        fetchMenWishlist();
+    }, []);
+
+    const handleMenWishlist = async (product) => {
+        try {
+            const userId = localStorage.getItem("userId");
+
+            if (!userId) {
+                alert("Please login first");
+                navigate("/login");
+                return;
+            }
+
+            const existingItem = wishlistItems.find(
+                (item) =>
+                    item?.product?._id === product._id ||
+                    item?.product === product._id
+            );
+
+            if (existingItem) {
+                await axios.delete(
+                    `${import.meta.env.VITE_API_URL}/wishlist/${existingItem._id}`
+                );
+
+                setWishlistItems((prev) =>
+                    prev.filter((item) => item._id !== existingItem._id)
+                );
+
+                console.log("Product removed from wishlist");
+
+            } else {
+                const response = await axios.post(
+                    `${import.meta.env.VITE_API_URL}/wishlist`,
+                    {
+                        user: userId,
+                        product: product._id,
+                    }
+                );
+
+                setWishlistItems((prev) => [
+                    ...prev,
+                    response.data.wishlistItem,
+                ]);
+
+                console.log("Product added to wishlist");
+            }
+
+            window.dispatchEvent(new Event("wishlistUpdated"));
+
+        } catch (error) {
+            console.log("Wishlist error:", error);
+        }
+    };
+
     return (
-        <section className="py-20">
+        <section className="py-20" id="men-collection">
 
             <div className="max-w-[1200px] mx-auto px-4">
 
@@ -170,15 +250,34 @@ pointer-events-none"
                                                 />
 
                                                 {/* Heart */}
-                                                <button
-                                                    className="absolute top-4 right-4 z-30
-      w-10 h-10 rounded-full bg-white shadow
-      flex items-center justify-center
-      opacity-0 group-hover:opacity-100
-      duration-300 hover:text-[#E7AB3C]"
-                                                >
-                                                    <FaHeart />
-                                                </button>
+                                                {(() => {
+                                                    const isWishlisted = wishlistItems.some(
+                                                        (item) =>
+                                                            item?.product?._id === product._id ||
+                                                            item?.product === product._id
+                                                    );
+
+                                                    return (
+                                                        <button
+                                                            onClick={() => handleMenWishlist(product)}
+                                                            className={`absolute top-4 right-4 z-30
+            w-10 h-10 rounded-full bg-white shadow
+            flex items-center justify-center
+            transition-all duration-300
+
+            opacity-100
+            lg:opacity-0
+            lg:group-hover:opacity-100
+
+            ${isWishlisted
+                                                                    ? "!text-pink-500 !opacity-100"
+                                                                    : "text-gray-700 hover:text-[#E7AB3C]"
+                                                                }`}
+                                                        >
+                                                            <FaHeart />
+                                                        </button>
+                                                    );
+                                                })()}
 
                                                 {/* Bottom Bar */}
 
@@ -223,7 +322,7 @@ flex"
                                                 </h3>
 
                                                 <p className="mt-2 text-3xl font-bold text-[#E7AB3C]">
-                                                    {product.price}
+                                                    ${product.price}
                                                 </p>
 
                                             </div>

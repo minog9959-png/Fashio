@@ -246,7 +246,7 @@ const MyOrders = () => {
           {order.paymentStatus !== "Paid" && allProductsAvailable && (
             <button
               onClick={() => handlePayment(order._id)}
-              className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+              className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 "
             >
               Pay Now
             </button>

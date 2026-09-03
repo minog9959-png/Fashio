@@ -330,7 +330,7 @@ pointer-events-none"
                                                 >
                                                     <FaHeart />
                                                 </button>
-                                                
+
 
                                                 {/* Bottom Bar */}
 

@@ -51,13 +51,15 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-              MEN'S
-            </li>
+            <Link to="/#men-collection">
+              <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+                MENS
+              </li>
+            </Link>
 
             <Link to="/#women-collection">
               <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-                WOMEN'S
+                WOMENS
               </li>
             </Link>
 
