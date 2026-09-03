@@ -127,7 +127,7 @@ const WomenCollection = () => {
     //     }
     // };
 
-    const handleWomenAddToWishlist = async (product) => {
+    const handleWomenWishlist = async (product) => {
         try {
             const userId = localStorage.getItem("userId");
 
