@@ -15,13 +15,13 @@ import Layout from "./pages/Layout";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
 import AdminLayout from "./components/admin/AdminLayout";
 
-// import socket from "./socketConnection";
+import socket from "./socketConnection";
 
-const loadSocket = async () => {
-  const { default: socket } = await import("./socketConnection");
+// const loadSocket = async () => {
+//   const { default: socket } = await import("./socketConnection");
 
-  socket.connect();
-};
+//   socket.connect();
+// };
 
 import {
 listenForMessages,
