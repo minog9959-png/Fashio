@@ -81,7 +81,9 @@ const Footer = () => {
                         <img
                             src={logo}
                             alt="Logo"
-                            className="mb-8"
+                            width="180"
+                            height="60"
+                            className="mb-8 w-auto h-auto"
                         />
 
                         <ul className="space-y-5 text-gray-400">

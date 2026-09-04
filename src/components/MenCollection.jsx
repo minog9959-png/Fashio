@@ -9,10 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import {
-    FaHeart,
-} from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaHeart } from "react-icons/fa";
 
 const tabs = [
     "Clothing",
