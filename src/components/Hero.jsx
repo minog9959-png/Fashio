@@ -77,7 +77,7 @@ const Hero = () => {
 
                   <Link
                     to="/shop"
-                    className="mt-8 sm:mt-9 inline-block bg-[#E7AB3C] px-6 py-3 text-xs font-semibold uppercase text-white duration-300 hover:bg-[#d89d32] sm:px-8 sm:py-4 sm:text-sm"
+                    className="mt-8 sm:mt-9 inline-block bg-[#B77900] px-6 py-3 text-xs font-semibold uppercase text-white duration-300 hover:bg-[#d89d32] sm:px-8 sm:py-4 sm:text-sm"
                   >
                     SHOP NOW
                   </Link>

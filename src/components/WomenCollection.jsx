@@ -231,8 +231,8 @@ const WomenCollection = () => {
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
                                         className={`pb-2 border-b-2 duration-300 ${activeTab === tab
-                                            ? "border-[#E7AB3C] text-[#E7AB3C]"
-                                            : "border-transparent hover:text-[#E7AB3C]"
+                                            ? "border-[#B77900] text-[#B77900]"
+                                            : "border-transparent text-gray-700 hover:text-[#B77900]"
                                             }`}
                                     >
                                         {tab}
@@ -375,7 +375,7 @@ flex"
                                                     {product.category?.name}
                                                 </p> */}
 
-                                                <p className="text-xs uppercase tracking-[3px] text-gray-400">
+                                                <p className="text-xs uppercase tracking-[3px] text-gray-600">
                                                     {product.subcategory}
                                                 </p>
 

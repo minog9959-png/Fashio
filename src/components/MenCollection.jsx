@@ -167,8 +167,8 @@ const MenCollection = () => {
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
                                         className={`pb-2 border-b-2 duration-300 ${activeTab === tab
-                                            ? "border-[#E7AB3C] text-[#E7AB3C]"
-                                            : "border-transparent hover:text-[#E7AB3C]"
+                                            ? "border-[#B77900] text-[#B77900]"
+                                            : "border-transparent text-gray-700 hover:text-[#B77900]"
                                             }`}
                                     >
                                         {tab}
@@ -260,6 +260,11 @@ pointer-events-none"
                                                     return (
                                                         <button
                                                             onClick={() => handleMenWishlist(product)}
+                                                            aria-label={
+                                                                isWishlisted
+                                                                    ? "Remove from wishlist"
+                                                                    : "Add to wishlist"
+                                                            }
                                                             className={`absolute top-4 right-4 z-30
             w-10 h-10 rounded-full bg-white shadow
             flex items-center justify-center
@@ -274,7 +279,7 @@ pointer-events-none"
                                                                     : "text-gray-700 hover:text-[#E7AB3C]"
                                                                 }`}
                                                         >
-                                                            <FaHeart />
+                                                            <FaHeart aria-hidden="true" />
                                                         </button>
                                                     );
                                                 })()}
@@ -313,7 +318,7 @@ flex"
 
                                             <div className="text-center my-5">
 
-                                                <p className="text-xs uppercase tracking-[3px] text-gray-400">
+                                                <p className="text-xs uppercase tracking-[3px] text-gray-600">
                                                     {product.subcategory}
                                                 </p>
 
@@ -333,23 +338,23 @@ flex"
                             </Swiper>
 
                             {/* Previous */}
-                            <button
+                            <button aria-label="Previous men's products"
                                 className="men-product-prev absolute -left-5 top-1/2 -translate-y-1/2
   z-20 w-11 h-11 rounded-full bg-white border border-gray-200
   flex items-center justify-center
   hover:bg-[#E7AB3C] hover:text-white duration-300"
                             >
-                                <FaChevronLeft />
+                                <FaChevronLeft aria-hidden="true" />
                             </button>
 
                             {/* Next */}
-                            <button
+                            <button aria-label="Next men's products"
                                 className="men-product-next absolute -right-5 top-1/2 -translate-y-1/2
   z-20 w-11 h-11 rounded-full bg-white border border-gray-200
   flex items-center justify-center
   hover:bg-[#E7AB3C] hover:text-white duration-300"
                             >
-                                <FaChevronRight />
+                                <FaChevronRight aria-hidden="true" />
                             </button>
 
                         </div>
