@@ -3,11 +3,11 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 
-import logo1 from "../assets/images/logo-carousel-1.png";
-import logo2 from "../assets/images/logo-carousel-2.png";
-import logo3 from "../assets/images/logo-carousel-3.png";
-import logo4 from "../assets/images/logo-carousel-4.png";
-import logo5 from "../assets/images/logo-carousel-5.png";
+import logo1 from "../assets/images/logo-carousel-1.webp";
+import logo2 from "../assets/images/logo-carousel-2.webp";
+import logo3 from "../assets/images/logo-carousel-3.webp";
+import logo4 from "../assets/images/logo-carousel-4.webp";
+import logo5 from "../assets/images/logo-carousel-5.webp";
 
 const logos = [
     logo1,
