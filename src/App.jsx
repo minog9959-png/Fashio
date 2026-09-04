@@ -131,7 +131,7 @@ function App() {
   return (
     <>
 
-    <ScrollToHash />
+      <ScrollToHash />
 
       <Routes>
 
@@ -139,27 +139,28 @@ function App() {
 
           {/* Pages with Header + footer */}
 
+          {/* Home */}
           <Route path="/" element={<Home />} />
 
+          {/* Shop - Public */}
           <Route path="/shop" element={
-            <ProtectedRoute>
               <Shop />
-            </ProtectedRoute>
           } />
 
+          {/* Product Details - Public */}
           <Route path="/product/:id" element={
-            <ProtectedRoute>
               <ProductDetails />
-            </ProtectedRoute>
           }
           />
 
+           {/* Cart - Login Required */}
           <Route path="/cart" element={
             <ProtectedRoute>
               <Cart />
             </ProtectedRoute>
           } />
 
+           {/* Wishlist - Login Required */}
           <Route path="/wishlist" element={
             <ProtectedRoute>
               <Wishlist />
@@ -167,13 +168,14 @@ function App() {
           }
           />
 
+           {/* Order - Login Required */}
           <Route path="/order" element={
             <ProtectedRoute>
               <MyOrders />
             </ProtectedRoute>}
           />
 
-          {/* Contact */}
+          {/* Contact - Public */}
           <Route path="/contact" element={<Contact />} />
 
         </Route>
@@ -187,7 +189,7 @@ function App() {
 
         <Route path="/payment-failed" element={<PaymentFailed />} />
 
-        {/* Admin Routes */}
+        {/* ================= ADMIN ROUTES ================= */}
 
         <Route path="/admin/login" element={<AdminLogin />} />
 
@@ -199,45 +201,24 @@ function App() {
             </AdminProtectedRoute>
           }
         >
-          <Route path="dashboard" element={
-            <AdminProtectedRoute>
-              <AdminDashboard />
-            </AdminProtectedRoute>
-          } />
+          {/* Dashboard */}
+          <Route path="dashboard" element={<AdminDashboard />} />
+
+          {/* Users */}
+          <Route path="users" element={<AdminUsers />} />
+
+          {/* Products */}
+          <Route path="products" element={<AdminProducts />} />
+
+          {/* Categories */}
+          <Route path="categories" element={<AdminCategories />} />
+
+          {/* Orders */}
+          <Route path="orders" element={<AdminOrders />} />
+
+          {/* Newsletter */}
+          <Route path="newsletter" element={<AdminNewsletter />} />
         </Route>
-
-        {/* Registered Users in a dashboard */}
-        <Route path="admin/users" element={
-          <AdminProtectedRoute>
-            <AdminUsers />
-          </AdminProtectedRoute>} />
-
-        {/* Admin Products in a dashboard */}
-        <Route path="admin/products" element={
-          <AdminProtectedRoute>
-            <AdminProducts />
-          </AdminProtectedRoute>
-        } />
-
-        {/* Admin categories in a dashboard */}
-        <Route path="admin/categories" element={
-          <AdminProtectedRoute>
-            <AdminCategories />
-          </AdminProtectedRoute>
-        } />
-
-        {/* Admin order in a dashboard */}
-        <Route path="admin/orders" element={
-          <AdminProtectedRoute>
-            <AdminOrders />
-          </AdminProtectedRoute>} />
-
-        {/* Admin order in a dashboard */}
-        <Route path="admin/newsletter" element={
-          <AdminProtectedRoute>
-            <AdminNewsletter />
-          </AdminProtectedRoute>
-        } />
 
         {/* user Profile */}
         <Route path="/profile" element={

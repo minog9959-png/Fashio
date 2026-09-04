@@ -26,7 +26,7 @@ const AdminNewsletter = () => {
     return (
         <div className="mb-6">
             {/* Page Header */}
-            <div className="mb-6 mt-4 ml-4">
+            <div className="mb-6 mt-8 ml-8">
                 <h1 className="text-2xl font-bold">
                     Newsletter Subscribers
                 </h1>
@@ -42,12 +42,12 @@ const AdminNewsletter = () => {
             </div>
 
             {/* Total Subscribers Card */}
-            <div className="bg-white rounded-lg shadow-sm p-5 mb-6">
+            <div className="bg-white rounded-lg shadow-sm p-5 mb-6 pl-8">
                 <p className="text-gray-500 text-sm">
                     Total Subscribers
                 </p>
 
-                <h2 className="text-3xl font-bold text-gray-800 mt-1">
+                <h2 className="text-3xl font-bold text-gray-800 mt-1 pl-8">
                     {userSubscribers.length}
                 </h2>
             </div>
