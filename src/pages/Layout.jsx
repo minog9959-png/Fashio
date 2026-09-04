@@ -7,8 +7,8 @@ import Footer from "../components/Footer.jsx";
 import { useState } from "react";
 
 const Layout = () => {
-    
-const [search, setSearch] = useState("");
+
+    const [search, setSearch] = useState("");
 
     return (
         <>
@@ -19,7 +19,11 @@ const [search, setSearch] = useState("");
             />
             <Navbar />
 
-            <Outlet />
+            <main>
+
+                <Outlet />
+
+            </main>
 
             <Footer />
         </>

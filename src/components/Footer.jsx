@@ -133,17 +133,24 @@ const Footer = () => {
                         </h3>
 
                         <ul className="space-y-4 text-gray-400">
-                            <Link to="/#benefits">
-                            <li className="hover:text-[#E7AB3C] cursor-pointer mb-4">Benefits</li>
-                            </Link>
 
-                            <Link to="/contact">
-                            <li className="hover:text-[#E7AB3C] cursor-pointer mb-4">Contact</li>
-                            </Link>
+                            <li className="hover:text-[#E7AB3C] cursor-pointer mb-4">
+                                <Link to="/#benefits">
+                                    Benefits
+                                </Link>
+                            </li>
 
-                            <Link to="/shop">
-                            <li className="hover:text-[#E7AB3C] cursor-pointer">Shop</li>
-                            </Link>
+                            <li className="hover:text-[#E7AB3C] cursor-pointer mb-4">
+                                <Link to="/contact">
+                                    Contact
+                                </Link>
+                            </li>
+
+                            <li className="hover:text-[#E7AB3C] cursor-pointer">
+                                <Link to="/shop">
+                                    Shop
+                                </Link>
+                            </li>
 
                         </ul>
 
