@@ -368,8 +368,10 @@ const Header = ({
                                     setShowNotifications(!showNotifications)
                                 }
                                 className="relative"
+                                aria-label="Notifications"
                             >
-                                <FaBell className="text-xl cursor-pointer hover:text-pink-500 duration-300" />
+                                <FaBell className="text-xl cursor-pointer hover:text-pink-500 duration-300"
+                                aria-hidden="true" />
 
                                 {notifications.length > 0 && (
                                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">

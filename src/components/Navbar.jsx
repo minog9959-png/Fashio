@@ -82,8 +82,9 @@ const Navbar = () => {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden text-white text-2xl p-4"
+            aria-label="Open menu"
           >
-            <FaBars />
+            <FaBars aria-hidden="true" />
           </button>
 
         </div>
