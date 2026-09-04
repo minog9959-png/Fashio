@@ -186,12 +186,23 @@ const WomenCollection = () => {
 
                     {/* Left Banner */}
 
-                    <div
+                    {/* <div
                         className="relative h-[620px] bg-cover bg-center"
                         style={{
                             backgroundImage: `url(${banner})`,
                         }}
-                    >
+                    > */}
+
+                    <div className="relative h-[620px] overflow-hidden">
+                        <img
+                            src={banner}
+                            alt="Women's Collection"
+                            width={600}
+                            height={620}
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover object-center"
+                        />
 
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
 
@@ -307,6 +318,10 @@ pointer-events-none"
                                                 <img
                                                     src={product.image}
                                                     alt={product.title}
+                                                    width={355}
+                                                    height={330}
+                                                    loading="lazy"
+                                                    decoding="async"
                                                     className="w-full h-[330px] object-cover transition duration-500 md:group-hover:scale-105"
                                                 />
 

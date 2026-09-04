@@ -243,8 +243,11 @@ pointer-events-none"
                                                 <img
                                                     src={product.image}
                                                     alt={product.title}
-                                                    className="w-full h-[330px] object-cover 
-                                                    transition duration-500 group-hover:scale-105"
+                                                    width={355}
+                                                    height={330}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="w-full h-[330px] object-cover transition duration-500 group-hover:scale-105"
                                                 />
 
                                                 {/* Heart */}
@@ -359,12 +362,25 @@ flex"
                     </div>
 
                     {/* Left Banner */}
-                    <div
+                    
+                    {/* <div
                         className="relative h-[620px] bg-cover bg-center"
                         style={{
                             backgroundImage: `url(${banner})`,
                         }}
-                    >
+                    > */}
+
+                    <div className="relative h-[620px] overflow-hidden">
+                        <img
+                            src={banner}
+                            alt="Men's Collection"
+                            width={600}
+                            height={620}
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover object-center"
+                        />
+
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
 
                             <h2 className="text-5xl font-bold text-white">
