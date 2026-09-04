@@ -243,7 +243,8 @@ pointer-events-none"
                                                 <img
                                                     src={product.image}
                                                     alt={product.title}
-                                                    className="w-full h-[330px] object-cover transition duration-500 group-hover:scale-105"
+                                                    className="w-full h-[330px] object-cover 
+                                                    transition duration-500 group-hover:scale-105"
                                                 />
 
                                                 {/* Heart */}

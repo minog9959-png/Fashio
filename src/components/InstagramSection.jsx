@@ -27,6 +27,10 @@ const InstagramSection = () => {
             <img
               src={image}
               alt=""
+              width={380}
+              height={380}
+              loading="lazy"
+              decoding="async"
               className="w-full h-[380px] object-cover"
             />
 
