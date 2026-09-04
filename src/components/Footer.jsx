@@ -1,4 +1,4 @@
-import logo from "../assets/images/footer-logo.png";
+import logo from "../assets/images/footer-logo.webp";
 import {
     FaMapMarkerAlt,
     FaPhoneAlt,
@@ -11,7 +11,7 @@ import {
     FaPinterestP,
 } from "react-icons/fa";
 
-import payment from "../assets/images/payment-method.png";
+// import payment from "../assets/images/payment-method.webp";
 
 // import newletter subscription
 import { useState } from "react";

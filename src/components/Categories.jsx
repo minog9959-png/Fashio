@@ -1,5 +1,5 @@
-import men from "../assets/images/banner-1.jpg";
-import women from "../assets/images/banner-2.jpg";
+import men from "../assets/images/banner-1.webp";
+import women from "../assets/images/banner-2.webp";
 
 const categories = [
   {

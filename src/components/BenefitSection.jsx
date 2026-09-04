@@ -1,5 +1,5 @@
-import icon1 from "../assets/images/icon-1.png";
-import icon2 from "../assets/images/icon-2.png";
+import icon1 from "../assets/images/icon-1.webp";
+import icon2 from "../assets/images/icon-2.webp";
 
 const benefits = [
     {
