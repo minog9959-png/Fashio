@@ -302,7 +302,7 @@ flex"
                                                         className="flex-1 bg-white font-semibold
     flex items-center justify-center
     hover:bg-[#252525]
-    hover:text-white duration-300"
+    hover:text-white duration-300" aria-label={`Quick View ${product.title}`}
                                                     >
                                                         + Quick View
                                                     </Link>

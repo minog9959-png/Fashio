@@ -1,29 +1,27 @@
 import { useState } from "react";
-import { FaBars, FaChevronDown } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <nav className="bg-[#252525]">
-
       <div className="max-w-[1200px] mx-auto px-4">
 
-        {/* Top Row */}
-
+        {/* Desktop Menu */}
         <div className="flex items-center justify-center">
-
-          {/* Desktop Menu */}
-
           <ul className="hidden md:flex items-center text-white">
-            {/* <li className="px-7 h-14 flex items-center">HOME</li> */}
+
+            {/* HOME */}
             <li className="h-14 flex items-center">
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `px-7 h-14 flex items-center duration-300 ${isActive
-                    ? "bg-[#E7AB3C] text-white"
-                    : "hover:bg-[#E7AB3C]"
+                  `px-7 h-14 flex items-center duration-300 ${
+                    isActive
+                      ? "bg-[#8A5A00] text-white"
+                      : "hover:bg-[#8A5A00]"
                   }`
                 }
               >
@@ -31,19 +29,15 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-          <Link to="/shop">
-          SHOP
-          </Link>
-        </li> */}
-
+            {/* SHOP */}
             <li className="h-14 flex items-center">
               <NavLink
                 to="/shop"
                 className={({ isActive }) =>
-                  `px-7 h-14 flex items-center duration-300 ${isActive
-                    ? "bg-[#E7AB3C] text-white"
-                    : "hover:bg-[#E7AB3C]"
+                  `px-7 h-14 flex items-center duration-300 ${
+                    isActive
+                      ? "bg-[#8A5A00] text-white"
+                      : "hover:bg-[#8A5A00]"
                   }`
                 }
               >
@@ -51,57 +45,63 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            <Link to="/#men-collection">
-              <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+            {/* MENS */}
+            <li className="h-14 flex items-center">
+              <Link
+                to="/#men-collection"
+                className="px-7 h-14 flex items-center hover:bg-[#8A5A00] duration-300"
+              >
                 MENS
-              </li>
-            </Link>
+              </Link>
+            </li>
 
-            <Link to="/#women-collection">
-              <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+            {/* WOMENS */}
+            <li className="h-14 flex items-center">
+              <Link
+                to="/#women-collection"
+                className="px-7 h-14 flex items-center hover:bg-[#8A5A00] duration-300"
+              >
                 WOMENS
-              </li>
-            </Link>
+              </Link>
+            </li>
 
-            {/* <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
-          BLOG
-        </li> */}
-
-            <Link to="/contact">
-
-              <li className="px-7 h-14 flex items-center hover:bg-[#E7AB3C] duration-300">
+            {/* CONTACT */}
+            <li className="h-14 flex items-center">
+              <Link
+                to="/contact"
+                className="px-7 h-14 flex items-center hover:bg-[#8A5A00] duration-300"
+              >
                 CONTACT
-              </li>
-
-            </Link>
+              </Link>
+            </li>
 
           </ul>
 
           {/* Mobile Menu Button */}
-
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden text-white text-2xl p-4"
-            aria-label="Open menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
           >
             <FaBars aria-hidden="true" />
           </button>
-
         </div>
 
         {/* Mobile Menu */}
-
         {menuOpen && (
           <ul className="md:hidden bg-[#252525] text-white">
 
+            {/* HOME */}
             <li className="border-t border-gray-600">
               <NavLink
                 to="/"
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
-                  `block p-4 duration-300 ${isActive
-                    ? "bg-[#E7AB3C]"
-                    : "active:bg-[#E7AB3C]"
+                  `block p-4 duration-300 ${
+                    isActive
+                      ? "bg-[#8A5A00]"
+                      : "active:bg-[#8A5A00]"
                   }`
                 }
               >
@@ -109,14 +109,16 @@ const Navbar = () => {
               </NavLink>
             </li>
 
+            {/* SHOP */}
             <li className="border-t border-gray-600">
               <NavLink
                 to="/shop"
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
-                  `block p-4 duration-300 ${isActive
-                    ? "bg-[#E7AB3C]"
-                    : "active:bg-[#E7AB3C]"
+                  `block p-4 duration-300 ${
+                    isActive
+                      ? "bg-[#8A5A00]"
+                      : "active:bg-[#8A5A00]"
                   }`
                 }
               >
@@ -124,21 +126,34 @@ const Navbar = () => {
               </NavLink>
             </li>
 
+            {/* MENS */}
+            <li className="border-t border-gray-600">
+              <Link
+                to="/#men-collection"
+                onClick={() => setMenuOpen(false)}
+                className="block p-4 active:bg-[#8A5A00] duration-300"
+              >
+                MENS
+              </Link>
+            </li>
+
+            {/* WOMENS */}
             <li className="border-t border-gray-600">
               <Link
                 to="/#women-collection"
                 onClick={() => setMenuOpen(false)}
-                className="block p-4 active:bg-[#E7AB3C] duration-300"
+                className="block p-4 active:bg-[#8A5A00] duration-300"
               >
-                WOMEN'S
+                WOMENS
               </Link>
             </li>
 
+            {/* CONTACT */}
             <li className="border-t border-gray-600">
               <Link
                 to="/contact"
                 onClick={() => setMenuOpen(false)}
-                className="block p-4 active:bg-[#E7AB3C] duration-300"
+                className="block p-4 active:bg-[#8A5A00] duration-300"
               >
                 CONTACT
               </Link>
@@ -146,9 +161,7 @@ const Navbar = () => {
 
           </ul>
         )}
-
       </div>
-
     </nav>
   );
 };

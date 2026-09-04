@@ -355,7 +355,7 @@ flex"
     flex items-center justify-center
     hover:bg-[#252525]
     hover:text-white
-    duration-300"
+    duration-300" aria-label={`Quick View ${product.title}`}
                                                     >
                                                         + Quick View
                                                     </Link>
