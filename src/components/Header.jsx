@@ -322,7 +322,7 @@ const Header = ({
                                     },
                                 });
                             }}
-                            className="flex items-center justify-center gap-2 bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-8 duration-300"
+                            className="flex items-center justify-center gap-2 bg-[#8A5A00] hover:bg-[#8A5A00] text-white px-8 duration-300"
                         aria-label="Search Products"
                         >
                             <FaSearch className="text-lg" aria-hidden="true" />
