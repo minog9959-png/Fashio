@@ -86,7 +86,10 @@ return null;
 
 function Home() {
 return (
-<> <Hero /> <Categories /> <WomenCollection /> <MenCollection /> <InstagramSection /> <BenefitSection /> <PartnerSection />
+<> 
+ <Suspense fallback={null}>
+<Hero /> <Categories /> <WomenCollection /> <MenCollection /> <InstagramSection /> <BenefitSection /> <PartnerSection />
+</Suspense>
 </>
 );
 }
