@@ -323,8 +323,9 @@ const Header = ({
                                 });
                             }}
                             className="flex items-center justify-center gap-2 bg-[#E7AB3C] hover:bg-[#d89d32] text-white px-8 duration-300"
+                        aria-label="Search Products"
                         >
-                            <FaSearch className="text-lg" />
+                            <FaSearch className="text-lg" aria-hidden="true" />
                         </button>
 
                         {/* Categories Dropdown */}
@@ -420,8 +421,9 @@ const Header = ({
 
                         {/* Wishlist */}
                         <div className="relative">
-                            <Link to="/wishlist">
-                                <FaHeart className="text-xl cursor-pointer hover:text-pink-500 duration-300" />
+                            <Link to="/wishlist" aria-label="Wishlist">
+                                <FaHeart className="text-xl cursor-pointer hover:text-pink-500 duration-300" 
+                                aria-hidden="true"/>
                             </Link>
 
                             <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
@@ -432,8 +434,9 @@ const Header = ({
 
                         {/* Orders */}
                         <div className="relative">
-                            <Link to="/order">
-                                <FaBoxOpen className="text-2xl cursor-pointer hover:text-pink-500 duration-300" />
+                            <Link to="/order" aria-label="Order">
+                                <FaBoxOpen className="text-2xl cursor-pointer hover:text-pink-500 duration-300"
+                                 aria-hidden="true" />
                             </Link>
 
                             <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
@@ -444,8 +447,9 @@ const Header = ({
 
                         {/* Cart */}
                         <div className="relative cursor-pointer">
-                            <Link to="/cart">
-                                <FaShoppingBag className="text-xl hover:text-pink-500 duration-300" />
+                            <Link to="/cart" aria-label="Cart">
+                                <FaShoppingBag className="text-xl hover:text-pink-500 duration-300"
+                                 aria-hidden="true" />
                             </Link>
 
                             <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
@@ -461,8 +465,9 @@ const Header = ({
 
                         {/* Profile */}
                         <div className="relative">
-                            <Link to="/profile">
-                                <FaUser className="text-lg cursor-pointer hover:text-pink-500 duration-300" />
+                            <Link to="/profile" aria-label="Profile">
+                                <FaUser className="text-lg cursor-pointer hover:text-pink-500 duration-300" 
+                                aria-hidden="true"/>
                             </Link>
                         </div>
 

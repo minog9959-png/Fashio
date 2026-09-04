@@ -1,0 +1,19 @@
+# Fashio
+
+Fashio is a modern fashion e-commerce website offering clothing, shoes, handbags, and accessories for men and women.
+
+## Website
+
+- [Fashio Home](https://fashio-eight.vercel.app/)
+- [Shop](https://fashio-eight.vercel.app/shop)
+- [Men Collection](https://fashio-eight.vercel.app/men-collection)
+- [Women Collection](https://fashio-eight.vercel.app/women-collection)
+- [Contact](https://fashio-eight.vercel.app/contact)
+
+## Products
+
+Fashio provides fashion products for men and women, including clothing, shoes, handbags, and accessories.
+
+## Purpose
+
+This website provides information about Fashio's products, collections, services, and online shopping experience.
