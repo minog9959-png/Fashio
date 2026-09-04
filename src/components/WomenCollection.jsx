@@ -317,20 +317,26 @@ pointer-events-none"
 
                                                 <button
                                                     onClick={() => handleWomenWishlist(product)}
+                                                    aria-label={
+                                                        wishlistItems.some(
+                                                            (item) => item?.product?._id === product._id
+                                                        )
+                                                            ? "Remove from wishlist"
+                                                            : "Add to wishlist"
+                                                    }
                                                     className={`absolute top-4 right-4 z-30
-    w-10 h-10 rounded-full bg-white shadow
-    flex items-center justify-center
-    transition-opacity duration-300
-    ${wishlistItems.some(
+        w-10 h-10 rounded-full bg-white shadow
+        flex items-center justify-center
+        transition-opacity duration-300
+        ${wishlistItems.some(
                                                         (item) => item?.product?._id === product._id
                                                     )
                                                             ? "opacity-100 text-pink-500"
                                                             : "opacity-100 lg:opacity-0 lg:group-hover:opacity-100 hover:text-[#E7AB3C]"
                                                         }`}
                                                 >
-                                                    <FaHeart />
+                                                    <FaHeart aria-hidden="true" />
                                                 </button>
-
 
                                                 {/* Bottom Bar */}
 
@@ -390,22 +396,24 @@ flex"
 
                             {/* Previous */}
                             <button
+                                aria-label="Previous products"
                                 className="product-prev absolute -left-5 top-1/2 -translate-y-1/2
-  z-20 w-11 h-11 rounded-full bg-white border border-gray-200
-  flex items-center justify-center
-  hover:bg-[#E7AB3C] hover:text-white duration-300"
+    z-20 w-11 h-11 rounded-full bg-white border border-gray-200
+    flex items-center justify-center
+    hover:bg-[#E7AB3C] hover:text-white duration-300"
                             >
-                                <FaChevronLeft />
+                                <FaChevronLeft aria-hidden="true" />
                             </button>
 
                             {/* Next */}
                             <button
+                                aria-label="Next products"
                                 className="product-next absolute -right-5 top-1/2 -translate-y-1/2
-  z-20 w-11 h-11 rounded-full bg-white border border-gray-200
-  flex items-center justify-center
-  hover:bg-[#E7AB3C] hover:text-white duration-300"
+    z-20 w-11 h-11 rounded-full bg-white border border-gray-200
+    flex items-center justify-center
+    hover:bg-[#E7AB3C] hover:text-white duration-300"
                             >
-                                <FaChevronRight />
+                                <FaChevronRight aria-hidden="true" />
                             </button>
 
                         </div>
