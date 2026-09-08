@@ -66,7 +66,7 @@ const TopBar = () => {
 
             {/* User Name */}
             <div className="px-6 py-4 border-r border-gray-200">
-              <span className="text-sm text-gray-900 font-semibold">
+              <span className="text-sm text-gray-800 font-semibold">
                 {userName || "Welcome"}
               </span>
             </div>

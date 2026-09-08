@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -61,10 +61,14 @@ const ProductDetails = () => {
         }
       );
 
-      alert(response.data.message);
+      // alert(response.data.message);
 
+      // Header/cart count update
       window.dispatchEvent(new Event("cartUpdated"));
       console.log("Cart updated event sent");
+
+      // Direct cart page
+      navigate("/cart");
 
     } catch (error) {
       console.log(error);
@@ -72,37 +76,46 @@ const ProductDetails = () => {
       alert(error.response?.data?.message || "Failed to add to cart");
     }
   };
-//wishlist handle
+
+  //wishlist handle
+
   const handleAddToWishlist = async () => {
-  try {
-    if (!product) return;
+    try {
+      if (!product) return;
 
-    const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId");
 
-    if (!userId) {
-      alert("Please login first");
-      navigate("/login");
-      return;
-    }
-
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/wishlist`,
-      {
-        user: userId,
-        product: product._id,
+      if (!userId) {
+        alert("Please login first");
+        navigate("/login");
+        return;
       }
-    );
 
-    alert(response.data.message);
+    const response =  await axios.post(
+        `${import.meta.env.VITE_API_URL}/wishlist`,
+        {
+          user: userId,
+          product: product._id,
+        }
+      );
 
-  } catch (error) {
-    console.log(error);
+      if (response.data.alreadyExists) {
+        alert(response.data.message);
+        return;
+      }
 
-    alert(
-      error.response?.data?.message || "Failed to add to wishlist"
-    );
-  }
-};
+      // New wishlist item → direct wishlist page
+      navigate("/wishlist");
+
+    } catch (error) {
+      console.log(error);
+
+      // Already exists
+      alert(
+        error.response?.data?.message || "Failed to add to wishlist"
+      );
+    }
+  };
 
   useEffect(() => {
     fetchProduct();

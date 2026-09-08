@@ -37,6 +37,10 @@ const Header = ({
 
     const [showCategories, setShowCategories] = useState(false);
 
+    const [products, setProducts] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
     const dropdownRef = useRef(null);
 
     const navigate = useNavigate();
@@ -154,9 +158,19 @@ const Header = ({
         }
     };
 
+    // for search suggestion
+    const fetchProducts = async () => {
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/products`
+        );
+
+        setProducts(response.data.products || []);
+    };
+
     // Fetch categories
     useEffect(() => {
         fetchCategories();
+        fetchProducts();
     }, []);
 
     // Call fetch funcions
@@ -306,11 +320,45 @@ const Header = ({
                             type="text"
                             placeholder="What do you need?"
                             value={search}
-                            onChange={(e) =>
-                                setSearch(e.target.value)
-                            }
+                            // onChange={(e) =>
+                            //     setSearch(e.target.value)
+                            // }
+
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setSearch(value);
+
+                                const filtered = products
+                                    .filter((product) =>
+                                        product.title
+                                            ?.toLowerCase()
+                                            .includes(value.toLowerCase())
+                                    )
+                                    .slice(0, 5);
+
+                                setSuggestions(filtered);
+                                setShowSuggestions(value.length > 0);
+                            }}
+                            
                             className="flex-1 px-5 text-sm outline-none"
                         />
+
+                        {showSuggestions && suggestions.length > 0 && (
+                            <div className="absolute top-full left-0 right-0 bg-white border shadow-lg z-50">
+                                {suggestions.map((product) => (
+                                    <p
+                                        key={product._id}
+                                        onClick={() => {
+                                            setSearch(product.title);
+                                            setShowSuggestions(false);
+                                        }}
+                                        className="px-4 py-3 text-sm hover:bg-gray-100 cursor-pointer"
+                                    >
+                                        {product.title}
+                                    </p>
+                                ))}
+                            </div>
+                        )}
 
                         {/* Search Button */}
                         <button
@@ -323,7 +371,7 @@ const Header = ({
                                 });
                             }}
                             className="flex items-center justify-center gap-2 bg-[#8A5A00] hover:bg-[#8A5A00] text-white px-8 duration-300"
-                        aria-label="Search Products"
+                            aria-label="Search Products"
                         >
                             <FaSearch className="text-lg" aria-hidden="true" />
                         </button>
@@ -371,7 +419,7 @@ const Header = ({
                                 aria-label="Notifications"
                             >
                                 <FaBell className="text-xl cursor-pointer hover:text-pink-500 duration-300"
-                                aria-hidden="true" />
+                                    aria-hidden="true" />
 
                                 {notifications.length > 0 && (
                                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
@@ -424,8 +472,8 @@ const Header = ({
                         {/* Wishlist */}
                         <div className="relative">
                             <Link to="/wishlist" aria-label="Wishlist">
-                                <FaHeart className="text-xl cursor-pointer hover:text-pink-500 duration-300" 
-                                aria-hidden="true"/>
+                                <FaHeart className="text-xl cursor-pointer hover:text-pink-500 duration-300"
+                                    aria-hidden="true" />
                             </Link>
 
                             <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
@@ -438,7 +486,7 @@ const Header = ({
                         <div className="relative">
                             <Link to="/order" aria-label="Order">
                                 <FaBoxOpen className="text-2xl cursor-pointer hover:text-pink-500 duration-300"
-                                 aria-hidden="true" />
+                                    aria-hidden="true" />
                             </Link>
 
                             <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
@@ -451,7 +499,7 @@ const Header = ({
                         <div className="relative cursor-pointer">
                             <Link to="/cart" aria-label="Cart">
                                 <FaShoppingBag className="text-xl hover:text-pink-500 duration-300"
-                                 aria-hidden="true" />
+                                    aria-hidden="true" />
                             </Link>
 
                             <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
@@ -468,8 +516,8 @@ const Header = ({
                         {/* Profile */}
                         <div className="relative">
                             <Link to="/profile" aria-label="Profile">
-                                <FaUser className="text-lg cursor-pointer hover:text-pink-500 duration-300" 
-                                aria-hidden="true"/>
+                                <FaUser className="text-lg cursor-pointer hover:text-pink-500 duration-300"
+                                    aria-hidden="true" />
                             </Link>
                         </div>
 

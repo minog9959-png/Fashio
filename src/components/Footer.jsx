@@ -180,7 +180,7 @@ const Footer = () => {
                             />
 
                             <button type="submit" disabled={loading}
-                                className="h-14 px-8 shrink-0 bg-[#B77900] text-white font-semibold hover:bg-[#965F00] duration-300">
+                                className="h-14 px-8 shrink-0 bg-[#B77900] text-white font-medium hover:bg-[#965F00] duration-300">
                                 {/* SUBSCRIBE */}
                                 {
                                     loading ? "SUBSCRIBING...." : "SUBSCRIBE"

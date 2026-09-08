@@ -3,7 +3,10 @@ import axios from "axios";
 import ProductCard from "./ProductCard";
 
 const ProductListing = ({ selectedCategory, searchKeyword, page, setPage }) => {
+
     const [products, setProducts] = useState([]);
+
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         fetchProducts();
@@ -46,6 +49,8 @@ const ProductListing = ({ selectedCategory, searchKeyword, page, setPage }) => {
 
             setProducts(response.data.products);
 
+            setTotalPages(response.data.totalPages);
+
         } catch (error) {
             console.log(error);
         }
@@ -81,10 +86,12 @@ const ProductListing = ({ selectedCategory, searchKeyword, page, setPage }) => {
 
                 <button
                     onClick={() => setPage(page + 1)}
-                    className="px-5 py-2 bg-[#E7AB3C] text-white rounded"
+                    disabled={page === totalPages}
+                    className="px-5 py-2 bg-[#E7AB3C] text-white rounded disabled:opacity-50"
                 >
                     Next
                 </button>
+
             </div>
 
         </div>
