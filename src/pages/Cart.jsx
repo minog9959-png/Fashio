@@ -236,21 +236,21 @@ const Cart = () => {
 
           <div
             key={item._id}
-            className="flex justify-between items-center border rounded-lg p-5 sm:p-10 mb-5"
+            className="flex flex-col sm:flex-row justify-between items-center border rounded-lg p-4 sm:p-10 mb-5 gap-6 sm:gap-0"
           >
 
             {/* Left Side */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto min-w-0">
 
               <img
                 src={item.product?.image}
                 alt={item.product?.title}
-                className="w-28 h-28 object-cover rounded"
+                className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded shrink-0"
               />
 
-              <div>
+              <div className="min-w-0">
 
-                <h2 className="text-2xl font-semibold">
+                <h2 className="text-lg sm:text-2xl font-semibold break-words">
                   {item.product?.title}
                 </h2>
 
@@ -268,8 +268,8 @@ const Cart = () => {
             </div>
 
             {/* Right Side */}
-            <div className="text-center sm:pl-[30px]">
 
+            <div className="text-center w-full sm:w-auto sm:pl-[30px]">
               <p className="mb-3 font-semibold">
                 Quantity
               </p>
