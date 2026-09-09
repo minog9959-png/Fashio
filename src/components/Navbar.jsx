@@ -20,8 +20,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `px-7 h-14 flex items-center duration-300 ${
                     isActive
-                      ? "bg-[#8A5A00] text-white"
-                      : "hover:bg-[#8A5A00]"
+                      ? "bg-[#B77900] text-white"
+                      : "hover:bg-[#A66A00]"
                   }`
                 }
               >
@@ -36,8 +36,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `px-7 h-14 flex items-center duration-300 ${
                     isActive
-                      ? "bg-[#8A5A00] text-white"
-                      : "hover:bg-[#8A5A00]"
+                      ? "bg-[#B77900] text-white"
+                      : "hover:bg-[#A66A00]"
                   }`
                 }
               >
@@ -49,7 +49,7 @@ const Navbar = () => {
             <li className="h-14 flex items-center">
               <Link
                 to="/#men-collection"
-                className="px-7 h-14 flex items-center hover:bg-[#8A5A00] duration-300"
+                className="px-7 h-14 flex items-center hover:bg-[#A66A00] duration-300"
               >
                 MENS
               </Link>
@@ -59,7 +59,7 @@ const Navbar = () => {
             <li className="h-14 flex items-center">
               <Link
                 to="/#women-collection"
-                className="px-7 h-14 flex items-center hover:bg-[#8A5A00] duration-300"
+                className="px-7 h-14 flex items-center hover:bg-[#A66A00] duration-300"
               >
                 WOMENS
               </Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
             <li className="h-14 flex items-center">
               <Link
                 to="/contact"
-                className="px-7 h-14 flex items-center hover:bg-[#8A5A00] duration-300"
+                className="px-7 h-14 flex items-center hover:bg-[#A66A00] duration-300"
               >
                 CONTACT
               </Link>
@@ -100,8 +100,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `block p-4 duration-300 ${
                     isActive
-                      ? "bg-[#8A5A00]"
-                      : "active:bg-[#8A5A00]"
+                      ? "bg-[#B77900]"
+                      : "active:bg-[#A66A00]"
                   }`
                 }
               >
@@ -117,8 +117,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `block p-4 duration-300 ${
                     isActive
-                      ? "bg-[#8A5A00]"
-                      : "active:bg-[#8A5A00]"
+                      ? "bg-[#B77900]"
+                      : "active:bg-[#B77900]"
                   }`
                 }
               >
@@ -131,7 +131,7 @@ const Navbar = () => {
               <Link
                 to="/#men-collection"
                 onClick={() => setMenuOpen(false)}
-                className="block p-4 active:bg-[#8A5A00] duration-300"
+                className="block p-4 active:bg-[#B77900] duration-300"
               >
                 MENS
               </Link>
@@ -142,7 +142,7 @@ const Navbar = () => {
               <Link
                 to="/#women-collection"
                 onClick={() => setMenuOpen(false)}
-                className="block p-4 active:bg-[#8A5A00] duration-300"
+                className="block p-4 active:bg-[#B77900] duration-300"
               >
                 WOMENS
               </Link>
@@ -153,7 +153,7 @@ const Navbar = () => {
               <Link
                 to="/contact"
                 onClick={() => setMenuOpen(false)}
-                className="block p-4 active:bg-[#8A5A00] duration-300"
+                className="block p-4 active:bg-[#B77900] duration-300"
               >
                 CONTACT
               </Link>
