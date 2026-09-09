@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -79,43 +81,103 @@ const ProductDetails = () => {
 
   //wishlist handle
 
+  // const handleAddToWishlist = async () => {
+  //   try {
+  //     if (!product) return;
+
+  //     const userId = localStorage.getItem("userId");
+
+  //     if (!userId) {
+  //       alert("Please login first");
+  //       navigate("/login");
+  //       return;
+  //     }
+
+  //   const response =  await axios.post(
+  //       `${import.meta.env.VITE_API_URL}/wishlist`,
+  //       {
+  //         user: userId,
+  //         product: product._id,
+  //       }
+  //     );
+
+  //     if (response.data.alreadyExists) {
+  //       alert(response.data.message);
+  //       return;
+  //     }
+
+  //     // New wishlist item → direct wishlist page
+  //     navigate("/wishlist");
+
+  //   } catch (error) {
+  //     console.log(error);
+
+  //     // Already exists
+  //     alert(
+  //       error.response?.data?.message || "Failed to add to wishlist"
+  //     );
+  //   }
+  // };
+
   const handleAddToWishlist = async () => {
-    try {
-      if (!product) return;
+  try {
+    if (!product) return;
 
-      const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userId");
 
-      if (!userId) {
-        alert("Please login first");
-        navigate("/login");
-        return;
-      }
+    if (!userId) {
+      Swal.fire({
+        icon: "warning",
+        title: "Login Required",
+        text: "Please login first",
+        confirmButtonText: "Login",
+      });
 
-    const response =  await axios.post(
-        `${import.meta.env.VITE_API_URL}/wishlist`,
-        {
-          user: userId,
-          product: product._id,
-        }
-      );
-
-      if (response.data.alreadyExists) {
-        alert(response.data.message);
-        return;
-      }
-
-      // New wishlist item → direct wishlist page
-      navigate("/wishlist");
-
-    } catch (error) {
-      console.log(error);
-
-      // Already exists
-      alert(
-        error.response?.data?.message || "Failed to add to wishlist"
-      );
+      navigate("/login");
+      return;
     }
-  };
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/wishlist`,
+      {
+        user: userId,
+        product: product._id,
+      }
+    );
+
+    if (response.data.alreadyExists) {
+      Swal.fire({
+        icon: "info",
+        title: "Already in Wishlist",
+        text: response.data.message,
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    // New wishlist item → show success alert
+    await Swal.fire({
+      icon: "success",
+      title: "Added to Wishlist!",
+      text: "Product has been added to your wishlist.",
+      confirmButtonText: "View Wishlist",
+    });
+
+    navigate("/wishlist");
+
+  } catch (error) {
+    console.log(error);
+
+    Swal.fire({
+      icon: "error",
+      title: "Something went wrong",
+      text:
+        error.response?.data?.message ||
+        "Failed to add to wishlist",
+      confirmButtonText: "OK",
+    });
+  }
+};
 
   useEffect(() => {
     fetchProduct();
