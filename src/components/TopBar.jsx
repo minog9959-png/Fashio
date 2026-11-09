@@ -9,26 +9,33 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const TopBar = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const token = localStorage.getItem("token");
+  // Token aur naam state me hain, taake login ke baad
+  // Login foran Logout me badle, refresh ka intezar na ho.
+  const [token, setToken] = useState(() =>
+    localStorage.getItem("token")
+  );
 
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-  const name = localStorage.getItem("userName");
-  setUserName(name || "");
-}, []);
+    setToken(localStorage.getItem("token"));
+    setUserName(localStorage.getItem("userName") || "");
+  }, [location.pathname]);
 
   const handleLogout = () => {
     // console.log("Logout clicked");
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("userName");
+    setToken(null);
+    setUserName("");
     navigate("/");
     window.location.reload();
   };
