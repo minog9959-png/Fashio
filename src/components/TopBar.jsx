@@ -25,8 +25,17 @@ const TopBar = () => {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    setToken(localStorage.getItem("token"));
-    setUserName(localStorage.getItem("userName") || "");
+    const savedToken = localStorage.getItem("token");
+    setToken(savedToken);
+    if (!savedToken) {
+      // Token nahi hai to purana naam bhi saaf karo,
+      // warna home page par bhi naam + Login dikhta hai.
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
+      setUserName("");
+    } else {
+      setUserName(localStorage.getItem("userName") || "");
+    }
   }, [location.pathname]);
 
   const handleLogout = () => {
