@@ -13,10 +13,6 @@ const ProtectedRoute = ({ children }) => {
       console.log("Token from localStorage:", token);
 
       if (!token) {
-        // Token nahi hai to naam bhi nahi rehna chahiye,
-        // warna naam + Login wali aadhi state dikhti hai.
-        localStorage.removeItem("userId");
-        localStorage.removeItem("userName");
         setAuthorized(false);
         setLoading(false);
         return;
@@ -35,8 +31,6 @@ const ProtectedRoute = ({ children }) => {
         setAuthorized(true);
       } catch (error) {
         localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("userName");
         setAuthorized(false);
       }
 
