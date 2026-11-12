@@ -99,10 +99,7 @@ return (
 function App() {
 
 // Socket Connection
-// Production (Vercel) me socket null hota hai, is liye guard zaroori hai.
 useEffect(() => {
-if (!socket) return;
-
 const userId = localStorage.getItem("userId");
 
 socket.on("connect", () => {
